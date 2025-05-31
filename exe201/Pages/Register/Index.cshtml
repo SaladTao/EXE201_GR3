@@ -1,0 +1,154 @@
+﻿@page
+@model exe201.Pages.Register.IndexModel
+@{
+    ViewData["Title"] = "Đăng ký";
+}
+
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Poppins&display=swap" rel="stylesheet" />
+<style>
+    body {
+        background-color: #f5f3ed;
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .login-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
+
+    .login-box {
+        background: #fff;
+        padding: 40px;
+        border-radius: 12px;
+        width: 100%;
+        max-width: 400px;
+        text-align: center;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .sub-heading {
+        color: #aaa;
+        font-size: 42px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-bottom: 10px;
+    }
+
+    .main-heading {
+        font-family: 'Playfair Display', serif;
+        font-size: 42px;
+        font-weight: 500;
+        margin-bottom: 30px;
+        position: relative;
+        display: inline-block;
+    }
+
+        .main-heading::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 1px;
+            background-color: #000;
+            left: 0;
+            bottom: 0.4em;
+        }
+
+    .form-group {
+        text-align: left;
+        margin-bottom: 20px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+    }
+
+    .btn-login {
+        margin-top: 15px;
+        width: 100%;
+        padding: 12px;
+        background: #ede4da;
+        border: 1px solid #d5bca3;
+        color: #8d7051;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.3s ease;
+    }
+
+        .btn-login:hover {
+            background-color: #decdbd;
+        }
+
+    .register-link {
+        margin-top: 20px;
+        font-size: 14px;
+    }
+</style>
+
+<div class="login-container">
+    <div class="login-box">
+        <h1 class="sub-heading">Đăng Ký</h1>
+
+        <form method="post">
+            <div class="form-group">
+                <label asp-for="Input.FullName">Họ và tên</label>
+                <input asp-for="Input.FullName" class="form-control" />
+                <span asp-validation-for="Input.FullName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Input.Email">Email</label>
+                <input asp-for="Input.Email" class="form-control" />
+                <span asp-validation-for="Input.Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Input.Password">Mật khẩu</label>
+                <input asp-for="Input.Password" class="form-control" type="password" />
+                <span asp-validation-for="Input.Password" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Input.ConfirmPassword">Xác nhận mật khẩu</label>
+                <input asp-for="Input.ConfirmPassword" class="form-control" type="password" />
+                <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Input.PhoneNumber">Số điện thoại</label>
+                <input asp-for="Input.PhoneNumber" class="form-control" />
+                <span asp-validation-for="Input.PhoneNumber" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Input.Province">Tỉnh / Thành phố</label>
+                <input asp-for="Input.Province" class="form-control" />
+                <span asp-validation-for="Input.Province" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Input.District">Quận / Huyện</label>
+                <input asp-for="Input.District" class="form-control" />
+                <span asp-validation-for="Input.District" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Input.Ward">Xã / Phường</label>
+                <input asp-for="Input.Ward" class="form-control" />
+                <span asp-validation-for="Input.Ward" class="text-danger"></span>
+            </div>
+
+            <button type="submit" class="btn-login">ĐĂNG KÝ →</button>
+        </form>
+
+        <p class="register-link">Đã có tài khoản? <a href="/Login">Đăng nhập</a></p>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

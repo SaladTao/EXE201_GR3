@@ -1,0 +1,27 @@
+﻿@page
+@model exe201.Pages.Home.FilterModel
+@{
+}
+<div id="all-genre" data-tab-content class="active" style="display: flex; justify-content: center; margin-top: 50px;">
+    <div class="row" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;">
+        @foreach (var item in Model.products)
+        {
+            <div class="col-md-3">
+                <div class="product-item">
+                    <figure class="product-style">
+                        <a href="/Home/DetailsProduct?productId=@item.Id">
+                            <img src="/images/client-image1.png" alt="@item.Name" class="product-item" />
+                        </a>
+                        <button type="button" class="add-to-cart" data-product-tile="add-to-cart">Xem Chi Tiết</button>
+                    </figure>
+                    <figcaption>
+                        <h3>
+                            <a href="/Home/DetailsProduct?productId=@item.Id">@item.Name</a>
+                        </h3>
+                        <span>@item.Description</span>
+                    </figcaption>
+                </div>
+            </div>
+        }
+    </div>
+</div>
