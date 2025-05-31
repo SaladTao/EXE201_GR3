@@ -1,0 +1,47 @@
+﻿@page
+@model exe201.Pages.Admin.Users.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Pages/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>List User</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>@Html.DisplayNameFor(model => model.User[0].Username)</th>
+            <th>@Html.DisplayNameFor(model => model.User[0].Email)</th>
+            <th>FullName</th>
+            <th>Phone</th>
+            <th>Address</th>
+            <th>Role</th>
+            <th>CreatedAt</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.User)
+        {
+            <tr>
+                <td>@item.Username</td>
+                <td>@item.Email</td>
+                <td>@item.Profile?.FullName</td>
+                <td>@item.Profile?.Phone</td>
+                <td>@item.Profile?.Address</td>
+                <td>@item.Role</td>
+                <td>@item.CreatedAt.ToString("dd/MM/yyyy")</td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

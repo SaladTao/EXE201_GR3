@@ -1,0 +1,99 @@
+﻿@page
+@model exe201.Pages.Admin.Users.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Pages/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1>Create New User</h1>
+
+<hr />
+
+<form method="post">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="row">
+        <!-- Cột bên trái: Thông tin User -->
+        <div class="col-md-6">
+            <div class="form-group">
+                <span class="text-danger">*</span>
+                <label asp-for="User.Username" class="control-label"></label>
+                <input asp-for="User.Username" class="form-control" />
+                <span asp-validation-for="User.Username" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <span class="text-danger">*</span>
+                <label asp-for="User.Email" class="control-label"></label>
+                <input asp-for="User.Email" class="form-control" />
+                <span asp-validation-for="User.Email" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <span class="text-danger">*</span>
+                <label asp-for="User.Password" class="control-label"></label>
+                <input asp-for="User.Password" class="form-control" />
+                <span asp-validation-for="User.Password" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <span class="text-danger">*</span>
+                <label asp-for="User.Role" class="control-label"></label>
+                <select asp-for="User.Role" class="form-control" asp-items="Model.RoleOptions"></select>
+                <span asp-validation-for="User.Role" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="User.CreatedAt" class="control-label"></label>
+                <input asp-for="User.CreatedAt" class="form-control" />
+                <span asp-validation-for="User.CreatedAt" class="text-danger"></span>
+            </div>
+        </div>
+
+        <!-- Cột bên phải: Thông tin UserProfile -->
+        <div class="col-md-6">
+            <div class="form-group">
+                <span class="text-danger">*</span>
+                <label asp-for="User.Profile.FullName" class="control-label"></label>
+                <input asp-for="User.Profile.FullName" class="form-control" />
+                <span asp-validation-for="User.Profile.FullName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <span class="text-danger">*</span>
+                <label asp-for="User.Profile.Address" class="control-label"></label>
+                <input asp-for="User.Profile.Address" class="form-control" />
+                <span asp-validation-for="User.Profile.Address" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <span class="text-danger">*</span>
+                <label asp-for="User.Profile.Phone" class="control-label"></label>
+                <input asp-for="User.Profile.Phone" class="form-control" />
+                <span asp-validation-for="User.Profile.Phone" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <span class="text-danger">*</span>
+                <label asp-for="User.Profile.AvatarUrl" class="control-label"></label>
+                <input asp-for="User.Profile.AvatarUrl" class="form-control" />
+                <span asp-validation-for="User.Profile.AvatarUrl" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group mt-3">
+        <input type="submit" value="Create" class="btn btn-primary" />
+    </div>
+</form>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
