@@ -15,5 +15,9 @@ namespace exe201.Data
         }
 
         public DbSet<exe201.Models.User> User { get; set; } = default!;
+        public DbSet<Product> Products { get; set; }
+        public DbSet<Category> Categories { get; set; }
+
+
     }
 }
