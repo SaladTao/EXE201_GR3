@@ -13,7 +13,7 @@ builder.Services.AddDbContext<exe201Context>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("exe201Context") ?? throw new InvalidOperationException("Connection string 'exe201Context' not found.")));
 
 builder.Services.AddDbContext<EcommerceContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DbContext") ?? throw new InvalidOperationException("Connection string 'DbContext' not found.")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("exe201Context") ?? throw new InvalidOperationException("Connection string 'DbContext' not found.")));
 
 // Add session services and cache BEFORE build
 builder.Services.AddDistributedMemoryCache();
