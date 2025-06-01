@@ -27,7 +27,7 @@ namespace exe201.Pages.Admin.Products
                 return NotFound();
             }
 
-            var product = await _context.Products.FirstOrDefaultAsync(m => m.Id == id);
+            var product = await _context.Products.Include(p => p.Category).FirstOrDefaultAsync(m => m.Id == id);
             if (product == null)
             {
                 return NotFound();

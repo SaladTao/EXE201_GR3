@@ -42,8 +42,15 @@ namespace exe201.Pages.Admin.Categories
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
+
+
+            // Kiểm tra tên danh mục đã tồn tại (trừ chính nó)
+            bool nameExists = await _context.Categories
+                .AnyAsync(c => c.Id != Category.Id && c.Name.ToLower() == Category.Name.ToLower());
+
+            if (nameExists)
             {
+                ModelState.AddModelError("Category.Name", "Tên danh mục đã tồn tại.");
                 return Page();
             }
 
@@ -67,6 +74,7 @@ namespace exe201.Pages.Admin.Categories
 
             return RedirectToPage("./Index");
         }
+
 
         private bool CategoryExists(int id)
         {

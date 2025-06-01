@@ -56,9 +56,10 @@
                             <label asp-for="Product.CategoryId" class="form-label">
                                 <i class="bi bi-tags"></i> Category
                             </label>
-                            <select asp-for="Product.CategoryId" class="form-select" asp-items="ViewBag.CategoryId"></select>
+                            <select asp-for="Product.CategoryId" class="form-select" asp-items="@(ViewData["CategoryId"] as SelectList)"></select>
                             <span asp-validation-for="Product.CategoryId" class="text-danger"></span>
                         </div>
+
                         <div class="mb-3">
                             <input class="form-check-input" asp-for="Product.VirtualGift" />
                             <label class="form-check-label">@Html.DisplayNameFor(model => model.Product.VirtualGift)</label>

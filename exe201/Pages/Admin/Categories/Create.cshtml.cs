@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using exe201.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace exe201.Pages.Admin.Categories
 {
@@ -29,8 +30,15 @@ namespace exe201.Pages.Admin.Categories
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
+
+
+            // Kiểm tra tên danh mục đã tồn tại
+            bool nameExists = await _context.Categories
+                .AnyAsync(c => c.Name.ToLower() == Category.Name.ToLower().Trim());
+
+            if (nameExists)
             {
+                ModelState.AddModelError("Category.Name", "Tên danh mục đã tồn tại.");
                 return Page();
             }
 
@@ -39,5 +47,6 @@ namespace exe201.Pages.Admin.Categories
 
             return RedirectToPage("./Index");
         }
+
     }
 }

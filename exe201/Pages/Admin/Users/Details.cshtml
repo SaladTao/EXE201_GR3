@@ -36,6 +36,17 @@
             <div class="col-sm-9">@Model.User.Profile?.FullName</div>
         </div>
         <div class="row mb-3">
+            <div class="col-sm-3 fw-semibold">Avatar</div>
+            @if (!string.IsNullOrEmpty(Model.User.Profile?.AvatarUrl))
+            {
+                <img src="@Model.User.Profile?.AvatarUrl" alt="Product Image" style="height: 200px;width:200px;" />
+            }
+            else
+            {
+                <span class="text-muted">No image available</span>
+            }
+        </div>
+        <div class="row mb-3">
             <div class="col-sm-3 fw-semibold">Phone</div>
             <div class="col-sm-9">@Model.User.Profile?.Phone</div>
         </div>

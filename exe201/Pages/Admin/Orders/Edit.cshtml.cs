@@ -43,13 +43,21 @@ namespace exe201.Pages.Admin.Orders
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
+
+
+  
+            // Lấy Order gốc từ DB
+            var orderToUpdate = await _context.Orders.FirstOrDefaultAsync(o => o.Id == Order.Id);
+
+            if (orderToUpdate == null)
             {
-                return Page();
+                return NotFound();
             }
 
-            _context.Attach(Order).State = EntityState.Modified;
-
+            // Cập nhật từng trường bạn muốn thay đổi
+            orderToUpdate.Status = Order.Status;
+            orderToUpdate.CreatedAt = Order.CreatedAt;
+            
             try
             {
                 await _context.SaveChangesAsync();

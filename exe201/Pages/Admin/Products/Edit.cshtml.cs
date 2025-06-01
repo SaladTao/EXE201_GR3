@@ -43,12 +43,31 @@ namespace exe201.Pages.Admin.Products
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
+
+            var productToUpdate = await _context.Products.FirstOrDefaultAsync(o => o.Id == Product.Id);
+
+            if (productToUpdate == null)
             {
+                return NotFound();
+            }
+
+            // Kiểm tra tên sản phẩm đã tồn tại (ngoại trừ chính sản phẩm đang chỉnh sửa)
+            bool isDuplicateName = await _context.Products
+                .AnyAsync(p => p.Name == Product.Name && p.Id != Product.Id);
+
+            if (isDuplicateName)
+            {
+                ModelState.AddModelError("Product.Name", "Tên sản phẩm đã tồn tại, vui lòng chọn tên khác.");
+                ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", Product.CategoryId);
                 return Page();
             }
 
-            _context.Attach(Product).State = EntityState.Modified;
+            productToUpdate.Name = Product.Name;
+            productToUpdate.Description = Product.Description;
+            productToUpdate.Price = Product.Price;
+            productToUpdate.ImageUrl = Product.ImageUrl;
+            productToUpdate.CategoryId = Product.CategoryId;
+            productToUpdate.VirtualGift = Product.VirtualGift;
 
             try
             {

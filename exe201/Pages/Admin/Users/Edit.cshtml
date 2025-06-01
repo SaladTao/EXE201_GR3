@@ -20,13 +20,13 @@
 
             <div class="form-group mb-3">
                 <label asp-for="User.Username" class="form-label fw-semibold"></label>
-                <input asp-for="User.Username" class="form-control" />
+                <input asp-for="User.Username" class="form-control" readonly/>
                 <span asp-validation-for="User.Username" class="text-danger small"></span>
             </div>
 
             <div class="form-group mb-3">
                 <label asp-for="User.Email" class="form-label fw-semibold"></label>
-                <input asp-for="User.Email" class="form-control" />
+                <input asp-for="User.Email" class="form-control" readonly />
                 <span asp-validation-for="User.Email" class="text-danger small"></span>
             </div>
 
@@ -38,7 +38,7 @@
 
             <div class="form-group mb-3">
                 <label asp-for="User.CreatedAt" class="form-label fw-semibold"></label>
-                <input asp-for="User.CreatedAt" class="form-control" type="datetime-local" />
+                <input asp-for="User.CreatedAt" class="form-control" type="datetime-local" readonly />
                 <span asp-validation-for="User.CreatedAt" class="text-danger small"></span>
             </div>
         </div>
@@ -49,25 +49,25 @@
 
             <div class="form-group mb-3">
                 <label asp-for="User.Profile.FullName" class="form-label fw-semibold"></label>
-                <input asp-for="User.Profile.FullName" class="form-control" />
+                <input asp-for="User.Profile.FullName" class="form-control" readonly />
                 <span asp-validation-for="User.Profile.FullName" class="text-danger small"></span>
             </div>
 
             <div class="form-group mb-3">
                 <label asp-for="User.Profile.Phone" class="form-label fw-semibold"></label>
-                <input asp-for="User.Profile.Phone" class="form-control" />
+                <input asp-for="User.Profile.Phone" class="form-control" readonly />
                 <span asp-validation-for="User.Profile.Phone" class="text-danger small"></span>
             </div>
 
             <div class="form-group mb-3">
                 <label asp-for="User.Profile.Address" class="form-label fw-semibold"></label>
-                <input asp-for="User.Profile.Address" class="form-control" />
+                <input asp-for="User.Profile.Address" class="form-control" readonly />
                 <span asp-validation-for="User.Profile.Address" class="text-danger small"></span>
             </div>
 
             <div class="form-group mb-3">
                 <label asp-for="User.Profile.AvatarUrl" class="form-label fw-semibold"></label>
-                <input asp-for="User.Profile.AvatarUrl" class="form-control" />
+                <input asp-for="User.Profile.AvatarUrl" class="form-control" readonly />
                 <span asp-validation-for="User.Profile.AvatarUrl" class="text-danger small"></span>
             </div>
         </div>

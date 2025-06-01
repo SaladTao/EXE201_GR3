@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using exe201.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace exe201.Pages.Admin.Products
 {
@@ -30,8 +31,12 @@ namespace exe201.Pages.Admin.Products
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
+            // Kiểm tra trùng tên sản phẩm
+            bool isDuplicateName = await _context.Products.AnyAsync(p => p.Name == Product.Name);
+            if (isDuplicateName)
             {
+                ModelState.AddModelError("Product.Name", "Tên sản phẩm đã tồn tại, vui lòng chọn tên khác.");
+                ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", Product.CategoryId);
                 return Page();
             }
 
