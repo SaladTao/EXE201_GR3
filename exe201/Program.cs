@@ -1,7 +1,7 @@
 ﻿using exe201.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using exe201.Data;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,9 +9,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 
 // Add DbContexts
-builder.Services.AddDbContext<exe201Context>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("exe201Context") ?? throw new InvalidOperationException("Connection string 'exe201Context' not found.")));
-
 builder.Services.AddDbContext<EcommerceContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DbContext") ?? throw new InvalidOperationException("Connection string 'DbContext' not found.")));
 

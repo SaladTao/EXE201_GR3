@@ -15,7 +15,7 @@ namespace exe201.Models
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 
         [Required]
-        [EnumDataType(typeof(UserRole))]
+        [EnumDataType(typeof(OrderStatus))]
         public string Status { get; set; } = OrderStatus.Pending.ToString();
 
         public User User { get; set; }
@@ -26,7 +26,7 @@ namespace exe201.Models
     {
         Pending,
         Completed,
-        Shipping,
+        Shipped,
         Cancelled
     }
 }

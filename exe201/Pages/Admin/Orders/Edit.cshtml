@@ -1,0 +1,61 @@
+﻿@page
+@model exe201.Pages.Admin.Orders.EditModel
+
+@{
+    ViewData["Title"] = "Edit Order";
+    Layout = "~/Pages/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container mt-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h2 class="mb-0">Edit Order</h2>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Order.Id" />
+
+                <div class="form-group">
+                    <label asp-for="Order.User.Username" class="control-label font-weight-bold"></label>
+                    <input asp-for="Order.User.Username" class="form-control form-control-lg" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Order.TotalAmount" class="control-label font-weight-bold"></label>
+                    <input asp-for="Order.TotalAmount" class="form-control form-control-lg" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Order.CreatedAt" class="control-label font-weight-bold"></label>
+                    <input asp-for="Order.CreatedAt" class="form-control form-control-lg"  />
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Order.Status" class="control-label font-weight-bold"></label>
+                    <select asp-for="Order.Status" class="form-control form-control-lg">
+                        <option value="Pending">Pending</option>
+                        <option value="Shipped">Shipped</option>
+                        <option value="Completed">Completed</option>
+                        <option value="Cancelled">Cancelled</option>
+                    </select>
+                    <span asp-validation-for="Order.Status" class="text-danger"></span>
+                </div>
+
+                <div class="text-center mt-3">
+                    <button type="submit" class="btn btn-success btn-lg">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="text-center mt-4">
+        <a asp-page="./Index" class="btn btn-secondary btn-lg">Back to List</a>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
