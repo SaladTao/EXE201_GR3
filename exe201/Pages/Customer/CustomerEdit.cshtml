@@ -133,8 +133,9 @@
         </div>
 
         <div class="form-group">
-            <label>Profile Image</label>
-            <input type="file" name="Avatar" class="form-control" />
+            <label asp-for="UserProfile.AvatarUrl">Profile Image</label>
+            <input asp-for="UserProfile.AvatarUrl" class="form-control" placeholder="Enter image URL" />
+            <span asp-validation-for="UserProfile.AvatarUrl" class="text-danger"></span>
         </div>
 
         <div class="text-center mt-4">

@@ -42,11 +42,7 @@ namespace exe201.Pages.Staff
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-
+            Category.CreatedAt = DateTime.Now;
             _context.Attach(Category).State = EntityState.Modified;
 
             try

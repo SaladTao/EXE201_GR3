@@ -51,12 +51,6 @@ namespace exe201.Pages.Customer
             {
                 return RedirectToPage("/Login/Index");
             }
-
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-
       
             UserProfile.UserId = userId.Value;
 
@@ -73,7 +67,8 @@ namespace exe201.Pages.Customer
 
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("/Customer/CustomerProfile");  
+            return RedirectToPage();
+
         }
     }
 }
