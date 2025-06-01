@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using exe201.Models;
-
+using Microsoft.AspNetCore.Http; 
 namespace exe201.Pages.Customer
 {
     public class CustomerEditModel : PageModel
@@ -22,57 +22,58 @@ namespace exe201.Pages.Customer
         [BindProperty]
         public UserProfile UserProfile { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync()
         {
-            if (id == null)
+            int? userId = HttpContext.Session.GetInt32("UserId");
+            if (userId == null)
             {
-                UserProfile = new UserProfile();
-                return Page();
+                return RedirectToPage("/Login/Index");
             }
 
-            var userprofile = await _context.UserProfiles.FirstOrDefaultAsync(m => m.UserId == id);
-            if (userprofile == null)
+            var userProfile = await _context.UserProfiles.FirstOrDefaultAsync(m => m.UserId == userId);
+            if (userProfile == null)
             {
-                return NotFound();
+               
+                UserProfile = new UserProfile { UserId = userId.Value };
             }
-            UserProfile = userprofile;
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Email");
+            else
+            {
+                UserProfile = userProfile;
+            }
+
             return Page();
         }
 
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
+            int? userId = HttpContext.Session.GetInt32("UserId");
+            if (userId == null)
+            {
+                return RedirectToPage("/Login/Index");
+            }
+
             if (!ModelState.IsValid)
             {
                 return Page();
             }
 
-            _context.Attach(UserProfile).State = EntityState.Modified;
+      
+            UserProfile.UserId = userId.Value;
 
-            try
+            var existingProfile = await _context.UserProfiles.FirstOrDefaultAsync(p => p.UserId == userId);
+
+            if (existingProfile == null)
             {
-                await _context.SaveChangesAsync();
+                _context.UserProfiles.Add(UserProfile);  
             }
-            catch (DbUpdateConcurrencyException)
+            else
             {
-                if (!UserProfileExists(UserProfile.UserId))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
+                _context.Entry(existingProfile).CurrentValues.SetValues(UserProfile);
             }
 
-            return RedirectToPage("./Index");
-        }
+            await _context.SaveChangesAsync();
 
-        private bool UserProfileExists(int id)
-        {
-            return _context.UserProfiles.Any(e => e.UserId == id);
+            return RedirectToPage("/Customer/CustomerProfile");  
         }
     }
 }

@@ -1,4 +1,4 @@
-using exe201.Service;
+﻿using exe201.Service;
 using exe201.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -14,15 +14,24 @@ namespace exe201.Pages.Customer
         }
 
         public CustomerProfileViewModel? Profile { get; set; }
-        public async Task<IActionResult> OnGetAsync(int id)
+        public async Task<IActionResult> OnGetAsync()
         {
-            Profile = await _cusService.GetCustomerProfileAsync(id);
+            var userId = HttpContext.Session.GetInt32("UserId");
+
+            if (userId == null)
+            {
+                return RedirectToPage("/Login/Index");
+            }
+
+            Profile = await _cusService.GetCustomerProfileAsync(userId.Value);
 
             if (Profile == null)
             {
                 return NotFound();
             }
+
             return Page();
         }
+
     }
 }
