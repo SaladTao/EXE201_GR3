@@ -1,0 +1,131 @@
+﻿@page "{id:int}"
+@model exe201.Pages.Customer.CustomerProfileModel
+
+@{
+    ViewData["Title"] = "Customer Profile";
+    Layout = "_CustomerLayout";
+}
+
+@section Styles {
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&family=Poppins&display=swap" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background-color: #f5f3ed;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .profile-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 60px 15px;
+        }
+
+        .profile-box {
+            background: #fff;
+            padding: 40px;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            font-weight: 500;
+            margin-bottom: 30px;
+            position: relative;
+            display: inline-block;
+        }
+
+            .section-title::after {
+                content: '';
+                position: absolute;
+                width: 100%;
+                height: 1px;
+                background-color: #000;
+                left: 0;
+                bottom: 0.3em;
+            }
+
+        .profile-img {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 4px solid #e0e0e0;
+            margin-bottom: 20px;
+        }
+
+        .profile-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .profile-email {
+            color: #888;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        dt {
+            font-weight: 600;
+            color: #555;
+            margin-top: 1rem;
+        }
+
+        dd {
+            margin-left: 0;
+            color: #333;
+        }
+
+        .btn-edit {
+            margin-top: 20px;
+            background: #ede4da;
+            border: 1px solid #d5bca3;
+            color: #8d7051;
+            font-weight: bold;
+            padding: 12px 30px;
+            border-radius: 30px;
+            transition: 0.3s ease;
+        }
+
+            .btn-edit:hover {
+                background-color: #decdbd;
+            }
+    </style>
+}
+
+@if (Model.Profile != null)
+{
+    <div class="profile-container">
+        <div class="profile-box">
+            <h2 class="section-title">Customer Profile</h2>
+
+            <img src="@(Model.Profile.AvatarUrl ?? "/images/default-profile.png")"
+                 alt="Profile Image"
+                 class="profile-img" />
+
+            <div class="profile-name">@Model.Profile.FullName</div>
+            <div class="profile-email">@Model.Profile.Email</div>
+
+            <dl class="text-start mt-4">
+                <dt>📞 Phone</dt>
+                <dd>@Model.Profile.Phone</dd>
+
+                <dt>🏠 Address</dt>
+                <dd>@Model.Profile.Address</dd>
+            </dl>
+
+            <a href="/Customer/EditProfile" class="btn btn-edit">Edit Profile</a>
+        </div>
+    </div>
+}
+else
+{
+    <p class="text-danger text-center mt-5">Customer profile not found.</p>
+}
