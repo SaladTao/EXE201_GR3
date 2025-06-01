@@ -2,41 +2,48 @@
 @model exe201.Pages.Admin.Categories.EditModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Chỉnh sửa danh mục";
     Layout = "~/Pages/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1>Edit</h1>
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2 shadow-sm p-4 rounded bg-light">
+            <h2 class="text-primary mb-4">
+                <i class="bi bi-pencil-square"></i> Chỉnh sửa danh mục
+            </h2>
 
-<h4>Category</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Category.Id" />
-            <div class="form-group">
-                <span class="text-danger">*</span>
-                <label asp-for="Category.Name" class="control-label"></label>
-                <input asp-for="Category.Name" class="form-control" />
-                <span asp-validation-for="Category.Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Category.CreatedAt" class="control-label"></label>
-                <input asp-for="Category.CreatedAt" class="form-control" />
-                <span asp-validation-for="Category.CreatedAt" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+                <input type="hidden" asp-for="Category.Id" />
+
+                <div class="mb-3">
+                    <label asp-for="Category.Name" class="form-label fw-bold">Tên danh mục <span class="text-danger">*</span></label>
+                    <input asp-for="Category.Name" class="form-control" />
+                    <span asp-validation-for="Category.Name" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Category.CreatedAt" class="form-label fw-bold">Ngày tạo</label>
+                    <input asp-for="Category.CreatedAt" class="form-control" />
+                    <span asp-validation-for="Category.CreatedAt" class="text-danger"></span>
+                </div>
+
+                <div class="d-flex justify-content-between">
+                    <a asp-page="./Index" class="btn btn-secondary">
+                        <i class="bi bi-arrow-left-circle"></i> Quay lại
+                    </a>
+                    <button type="submit" class="btn btn-primary">
+                        <i class="bi bi-save"></i> Lưu thay đổi
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-page="./Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }

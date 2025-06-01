@@ -2,31 +2,41 @@
 @model exe201.Pages.Admin.Categories.DetailsModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Chi tiết danh mục";
     Layout = "~/Pages/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1>Details</h1>
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-8 offset-md-2 shadow-sm p-4 bg-light rounded">
+            <h2 class="text-info mb-4">
+                <i class="bi bi-card-list"></i> Chi tiết danh mục
+            </h2>
 
-<div>
-    <h4>Category</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Category.Name)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Category.Name)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Category.CreatedAt)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Category.CreatedAt)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-page="./Edit" asp-route-id="@Model.Category.Id">Edit</a> |
-    <a asp-page="./Index">Back to List</a>
+            <dl class="row">
+                <dt class="col-sm-4 fw-bold">
+                    @Html.DisplayNameFor(model => model.Category.Name)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Category.Name)
+                </dd>
+
+                <dt class="col-sm-4 fw-bold">
+                    @Html.DisplayNameFor(model => model.Category.CreatedAt)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Category.CreatedAt)
+                </dd>
+            </dl>
+
+            <div class="mt-4 d-flex justify-content-between">
+                <a asp-page="./Index" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left-circle"></i> Quay lại
+                </a>
+                <a asp-page="./Edit" asp-route-id="@Model.Category.Id" class="btn btn-warning">
+                    <i class="bi bi-pencil-square"></i> Chỉnh sửa
+                </a>
+            </div>
+        </div>
+    </div>
 </div>

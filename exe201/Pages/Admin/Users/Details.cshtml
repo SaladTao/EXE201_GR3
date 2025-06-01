@@ -2,61 +2,55 @@
 @model exe201.Pages.Admin.Users.DetailsModel
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "User Details";
     Layout = "~/Pages/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1>Details</h1>
+<h1 class="mb-4 text-primary">User Details</h1>
+
+<div class="card shadow-sm border-0 mb-4">
+    <div class="card-body">
+        <h5 class="card-title text-secondary">Account Information</h5>
+        <div class="row mb-3">
+            <div class="col-sm-3 fw-semibold">Username</div>
+            <div class="col-sm-9">@Model.User.Username</div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-sm-3 fw-semibold">Email</div>
+            <div class="col-sm-9">@Model.User.Email</div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-sm-3 fw-semibold">Role</div>
+            <div class="col-sm-9">@Model.User.Role</div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-sm-3 fw-semibold">Created At</div>
+            <div class="col-sm-9">@Model.User.CreatedAt.ToString("dd/MM/yyyy HH:mm")</div>
+        </div>
+
+        <hr />
+
+        <h5 class="card-title text-secondary">Profile Information</h5>
+        <div class="row mb-3">
+            <div class="col-sm-3 fw-semibold">Full Name</div>
+            <div class="col-sm-9">@Model.User.Profile?.FullName</div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-sm-3 fw-semibold">Phone</div>
+            <div class="col-sm-9">@Model.User.Profile?.Phone</div>
+        </div>
+        <div class="row mb-3">
+            <div class="col-sm-3 fw-semibold">Address</div>
+            <div class="col-sm-9">@Model.User.Profile?.Address</div>
+        </div>
+    </div>
+</div>
 
 <div>
-    <h4>User</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.User.Username)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.User.Username)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.User.Email)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.User.Email)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.User.Profile.FullName)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.User.Profile.FullName)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.User.Profile.Phone)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.User.Profile.Phone)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.User.Profile.Address)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.User.Profile.Address)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.User.Role)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.User.Role)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.User.CreatedAt)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.User.CreatedAt)
-        </dd>
-    </dl>
-</div>
-<div>
-    <a asp-page="./Edit" class="btn btn-primary" asp-route-id="@Model.User.Id">Edit</a>
-    <a asp-page="./Index" class="btn btn-secondary ms-2">Back to List</a>
+    <a asp-page="./Edit" asp-route-id="@Model.User.Id" class="btn btn-primary">
+        <i class="bi bi-pencil-square"></i> Edit
+    </a>
+    <a asp-page="./Index" class="btn btn-secondary ms-2">
+        <i class="bi bi-arrow-left-circle"></i> Back to List
+    </a>
 </div>
