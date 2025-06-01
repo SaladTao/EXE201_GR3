@@ -18,12 +18,45 @@ namespace exe201.Pages.Admin.Orders
             _context = context;
         }
 
-        public IList<Order> Order { get;set; } = default!;
+        public IList<Order> Order { get; set; } = default!;
 
-        public async Task OnGetAsync()
+        [BindProperty(SupportsGet = true)]
+        public string? SearchEmail { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public string? StatusFilter { get; set; }
+
+        public int CurrentPage { get; set; } = 1;
+        public int TotalPages { get; set; }
+        public int PageSize { get; set; } = 2;
+
+        public async Task OnGetAsync(int? pageNumber)
         {
-            Order = await _context.Orders
-                .Include(o => o.User).ToListAsync();
+            if (pageNumber.HasValue)
+                CurrentPage = pageNumber.Value;
+
+            var query = _context.Orders
+                .Include(o => o.User)
+                .AsQueryable();
+
+            if (!string.IsNullOrEmpty(SearchEmail))
+            {
+                query = query.Where(o => o.User != null && o.User.Email.Contains(SearchEmail));
+            }
+
+            if (!string.IsNullOrEmpty(StatusFilter))
+            {
+                query = query.Where(o => o.Status == StatusFilter);
+            }
+
+            int totalItems = await query.CountAsync();
+            TotalPages = (int)Math.Ceiling(totalItems / (double)PageSize);
+
+            Order = await query
+                .OrderByDescending(o => o.CreatedAt)
+                .Skip((CurrentPage - 1) * PageSize)
+                .Take(PageSize)
+                .ToListAsync();
         }
     }
 }

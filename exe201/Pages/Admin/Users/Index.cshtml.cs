@@ -18,11 +18,59 @@ namespace exe201.Pages.Admin.Users
             _context = context;
         }
 
-        public IList<User> User { get;set; } = default!;
+        public IList<User> User { get; set; } = default!;
 
-        public async Task OnGetAsync()
+        [BindProperty(SupportsGet = true)]
+        public string? SearchTerm { get; set; }
+
+        [BindProperty(SupportsGet = true)]
+        public string? RoleFilter { get; set; }
+        public List<string> Roles { get; set; } = new(); // Danh sách role dùng cho dropdown
+
+        public int CurrentPage { get; set; } = 1;
+        public int TotalPages { get; set; }
+        public int PageSize { get; set; } = 2;
+
+        public async Task OnGetAsync(int? pageNumber)
         {
-            User = await _context.Users.Include(u => u.Profile).ToListAsync();
+            if (pageNumber.HasValue)
+                CurrentPage = pageNumber.Value;
+
+            var query = _context.Users
+                .Include(u => u.Profile)
+                .AsQueryable();
+
+            // Lọc theo SearchTerm
+            if (!string.IsNullOrWhiteSpace(SearchTerm))
+            {
+                query = query.Where(u =>
+                    u.Username.Contains(SearchTerm) ||
+                    u.Email.Contains(SearchTerm) ||
+                    (u.Profile != null && u.Profile.FullName.Contains(SearchTerm)));
+            }
+
+            // Lọc theo Role
+            if (!string.IsNullOrWhiteSpace(RoleFilter))
+            {
+                query = query.Where(u => u.Role == RoleFilter);
+            }
+
+            // Lấy tất cả role duy nhất để hiển thị trong dropdown
+            Roles = await _context.Users
+                .Select(u => u.Role)
+                .Distinct()
+                .ToListAsync();
+
+            // Phân trang
+            int totalItems = await query.CountAsync();
+            TotalPages = (int)Math.Ceiling(totalItems / (double)PageSize);
+
+            User = await query
+                .OrderByDescending(u => u.CreatedAt)
+                .Skip((CurrentPage - 1) * PageSize)
+                .Take(PageSize)
+                .ToListAsync();
         }
+
     }
 }

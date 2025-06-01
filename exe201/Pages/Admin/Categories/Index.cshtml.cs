@@ -18,11 +18,34 @@ namespace exe201.Pages.Admin.Categories
             _context = context;
         }
 
-        public IList<Category> Category { get;set; } = default!;
+        public IList<Category> Category { get; set; } = default!;
+        [BindProperty(SupportsGet = true)]
+        public string? SearchString { get; set; }
 
-        public async Task OnGetAsync()
+        public int CurrentPage { get; set; } = 1;
+        public int TotalPages { get; set; }
+        public int PageSize { get; set; } = 2;
+
+        public async Task OnGetAsync(int? pageNumber)
         {
-            Category = await _context.Categories.ToListAsync();
+            if (pageNumber.HasValue)
+                CurrentPage = pageNumber.Value;
+
+            var query = _context.Categories.AsQueryable();
+
+            if (!string.IsNullOrEmpty(SearchString))
+            {
+                query = query.Where(c => c.Name.Contains(SearchString));
+            }
+
+            int totalItems = await query.CountAsync();
+            TotalPages = (int)Math.Ceiling(totalItems / (double)PageSize);
+
+            Category = await query
+                .OrderByDescending(c => c.CreatedAt)
+                .Skip((CurrentPage - 1) * PageSize)
+                .Take(PageSize)
+                .ToListAsync();
         }
     }
 }
