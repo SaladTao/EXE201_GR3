@@ -3,6 +3,10 @@
 
 @{
     ViewData["Title"] = "Chi Tiết Sản Phẩm";
+    var userId = HttpContext.Session.GetInt32("UserId");
+    var username = HttpContext.Session.GetString("Username");
+    
+
 }
 <!-- Google Font: Inter -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -89,12 +93,21 @@
             </div>
 
             <!-- Nút thêm vào giỏ hàng -->
-            <form method="post" asp-page-handler="AddToCart">
-                <input type="hidden" name="productId" value="@Model.Product.Id" />
-                <button type="submit" class="btn btn-warning btn-lg w-100 fw-bold text-white" style="background-color: darkorange;">
-                    THÊM VÀO GIỎ HÀNG <i class="bi bi-cart-plus ms-2"></i>
-                </button>
-            </form>
+            @if (userId != null)
+            {
+                <form method="post" asp-page-handler="AddToCart">
+                    <input type="hidden" name="productId" value="@Model.Product.Id" />
+                    <button type="submit" class="btn btn-warning btn-lg w-100 fw-bold text-white" style="background-color: darkorange;">
+                        THÊM VÀO GIỎ HÀNG <i class="bi bi-cart-plus ms-2"></i>
+                    </button>
+                </form>
+            }
+            else
+            {
+                <a href="/Login" class="btn btn-secondary btn-lg w-100 fw-bold text-white" style="background-color : limegreen">
+                    ĐĂNG NHẬP ĐỂ MUA HÀNG <i class="bi bi-box-arrow-in-right ms-2"></i>
+                </a>
+            }
         </div>
     </div>
 </div>
