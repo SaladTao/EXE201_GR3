@@ -1,0 +1,36 @@
+﻿@page "{id:int}"
+@model exe201.Pages.Orders.DetailsModel
+@{
+    ViewData["Title"] = "Chi tiết đơn hàng";
+}
+
+<h2>Chi tiết đơn hàng #@Model.Order.Id</h2>
+
+<p><strong>Ngày đặt:</strong> @Model.Order.OrderDate.ToString("dd/MM/yyyy HH:mm")</p>
+<p><strong>Trạng thái:</strong> @Model.Order.Status</p>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Tên sản phẩm</th>
+            <th>Giá</th>
+            <th>Số lượng</th>
+            <th>Thành tiền</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Order.OrderDetails)
+        {
+            <tr>
+                <td>@item.Product.Name</td>
+                <td>@item.Price.ToString("N0") đ</td>
+                <td>@item.Quantity</td>
+                <td>@(item.Price * item.Quantity).ToString("N0") đ</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<p><strong>Tổng cộng:</strong> @Model.Order.TotalAmount.ToString("N0") đ</p>
+
+<a asp-page="/Orders/Index" class="btn btn-secondary">Quay lại danh sách</a>
