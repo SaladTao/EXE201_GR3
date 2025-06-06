@@ -51,14 +51,19 @@ namespace exe201.Pages.Customer
             {
                 return RedirectToPage("/Login/Index");
             }
-      
+
             UserProfile.UserId = userId.Value;
+             
+            if (string.IsNullOrWhiteSpace(UserProfile.AvatarUrl))
+            {
+                UserProfile.AvatarUrl = "/images/default-profile.png";
+            }
 
             var existingProfile = await _context.UserProfiles.FirstOrDefaultAsync(p => p.UserId == userId);
 
             if (existingProfile == null)
             {
-                _context.UserProfiles.Add(UserProfile);  
+                _context.UserProfiles.Add(UserProfile);
             }
             else
             {
@@ -68,7 +73,7 @@ namespace exe201.Pages.Customer
             await _context.SaveChangesAsync();
 
             return RedirectToPage();
-
         }
+
     }
 }

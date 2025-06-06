@@ -3,7 +3,6 @@
 
 @{
     ViewData["Title"] = "Edit Profile";
-    Layout = "_CustomerLayout";
 }
 
 @section Styles {
@@ -132,15 +131,8 @@
             <span asp-validation-for="UserProfile.Phone" class="text-danger"></span>
         </div>
 
-        <div class="form-group">
-            <label asp-for="UserProfile.AvatarUrl">Profile Image</label>
-            <input asp-for="UserProfile.AvatarUrl" class="form-control" placeholder="Enter image URL" />
-            <span asp-validation-for="UserProfile.AvatarUrl" class="text-danger"></span>
-        </div>
-
         <div class="text-center mt-4">
             <button type="submit" class="btn btn-save">Save Changes</button>
-            <a asp-page="/Customer/Profile" class="btn btn-outline-dark btn-cancel">Cancel</a>
         </div>
     </form>
 </div>

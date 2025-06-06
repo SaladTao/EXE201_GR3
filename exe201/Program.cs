@@ -1,4 +1,5 @@
 ﻿using exe201.Models;
+using exe201.Repository;
 using exe201.Repository.Order;
 using exe201.Repository.OrderDetail;
 using exe201.Repository.Product;
@@ -34,6 +35,8 @@ builder.Services.AddScoped<OrderService>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IOrderDetailRepository, OrderDetailRepository>();
 builder.Services.AddScoped<ProductService>();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 
 
 var app = builder.Build();
