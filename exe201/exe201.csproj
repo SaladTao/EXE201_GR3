@@ -18,7 +18,6 @@
 
   <ItemGroup>
     <Folder Include="Data\" />
-    <Folder Include="Pages\Customer\" />
     <Folder Include="Pages\Staff\" />
   </ItemGroup>
 
