@@ -1,5 +1,4 @@
-﻿using exe201.Data;
-using exe201.Models;
+﻿using exe201.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -9,9 +8,9 @@ namespace exe201.Pages.Products
 {
     public class CreateModel : PageModel
     {
-        private readonly exe201Context _context;
+        private readonly EcommerceContext _context;
 
-        public CreateModel(exe201Context context)
+        public CreateModel(EcommerceContext context)
         {
             _context = context;
         }
