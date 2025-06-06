@@ -8,6 +8,11 @@ namespace exe201.Pages.Home
     public class StoryDetailModel : PageModel
     {
         public Story Storys { get; set; }
+        [BindProperty(SupportsGet = true)]
+        public int PageNumber { get; set; }
+
+        [BindProperty(SupportsGet = true, Name = "selectedCategory")]
+        public string SelectedCategory { get; set; }
 
         private static readonly List<Story> Stories = new List<Story>
         {

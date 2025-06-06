@@ -106,7 +106,13 @@
         {
             <div class="custom-card">
                 <p class="text-muted text-center">Câu chuyện không tồn tại.</p>
-                <a asp-page="/Home/Story" class="back-link">Quay lại danh sách câu chuyện</a>
+                <a asp-page="/Home/Story"
+                   asp-route-PageNumber="@Model.PageNumber"
+                   asp-route-selectedCategory="@Model.SelectedCategory"
+                   class="back-link">
+                    Quay lại danh sách câu chuyện
+                </a>
+
             </div>
         }
         else
@@ -115,12 +121,17 @@
                 <h1 class="page-title">@Model.Storys.Title</h1>
                 <img src="@Model.Storys.ImageUrl" alt="@Model.Storys.Title" class="story-image" />
                 <p class="story-description">@Model.Storys.Description</p>
-                <a asp-page="/Home/Story" class="back-link">Quay lại danh sách câu chuyện</a>
+                <a asp-page="/Home/Story"
+                   asp-route-PageNumber="@Model.PageNumber"
+                   asp-route-selectedCategory="@Model.SelectedCategory"
+                   class="back-link">
+                    Quay lại danh sách câu chuyện
+                </a>
+
             </div>
         }
     </div>
-
-    <!-- Bootstrap JS -->
+     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
