@@ -63,7 +63,12 @@ namespace exe201.Pages.Home
                 Id = 7,
                 Title = "Mây tre đan và môi trường bền vững",
                 ImageUrl = "https://vungdecor.com/wp-content/uploads/2024/12/do-may-tre-dan-hcm2.png",
-                Description = "Mây tre đan không chỉ là một nghề thủ công mà còn là một giải pháp thân thiện với môi trường, góp phần thúc đẩy lối sống bền vững trong bối cảnh biến đổi khí hậu toàn cầu. Tre và mây là những nguyên liệu tự nhiên, tái tạo nhanh chóng, không đòi hỏi việc chặt phá rừng quy mô lớn như gỗ cứng, giúp bảo vệ hệ sinh thái. Quá trình sản xuất mây tre đan chủ yếu sử dụng lao động thủ công, hạn chế tiêu thụ năng lượng và không tạo ra chất thải công nghiệp độc hại, khác biệt hoàn toàn với các ngành sản xuất hiện đại. Các sản phẩm mây tre đan có độ bền cao, có thể tái sử dụng hoặc tái chế, giảm thiểu rác thải nhựa và các vật liệu không phân hủy. Ngoài ra, việc phát triển nghề mây tre đan còn khuyến khích người dân trồng và bảo vệ cây tre, mây, tạo ra một chu trình sản xuất xanh. Với những ưu điểm này, mây tre đan không chỉ là di sản văn hóa mà còn là một mô hình kinh tế bền vững, được các tổ chức quốc tế và người tiêu dùng hiện đại ngày càng ưa chuộng."
+            },
+            new Story
+            {
+                Id = 7,
+                Title = "Mây tre đan và môi trường bền vững",
+                ImageUrl = "https://vungdecor.com/wp-content/uploads/2024/12/do-may-tre-dan-hcm2.png",
             }
         };
 
