@@ -41,12 +41,21 @@ namespace exe201.Pages.Login
                 return Page();
             }
 
-            // Lưu thông tin user vào session (ví dụ lưu UserId và Username)
+            // Lưu thông tin user vào session
             HttpContext.Session.SetInt32("UserId", user.Id);
             HttpContext.Session.SetString("Username", user.Username ?? "");
+            HttpContext.Session.SetString("UserRole", user.Role); // <-- lưu Role vào session
 
+            // Phân quyền chuyển hướng
+            if (user.Role == "administrator")
+            {
+                return RedirectToPage("/Admin/Dashboard");
+            }
+
+            // Mặc định là Customer → về trang chủ
             return RedirectToPage("/Home/Index");
         }
+
 
 
         public class LoginInputModel

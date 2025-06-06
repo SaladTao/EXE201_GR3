@@ -1,0 +1,88 @@
+﻿@page
+@model exe201.Pages.Admin.Orders.DetailsModel
+
+@{
+    ViewData["Title"] = "Order Details";
+    Layout = "~/Pages/Shared/_LayoutAdmin.cshtml";
+}
+
+<div class="container mt-4">
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h2 class="mb-0">Order Details</h2>
+        </div>
+        <div class="card-body">
+            <h4 class="mb-3">General Information</h4>
+            <hr />
+            <dl class="row">
+                <dt class="col-sm-3 font-weight-bold">
+                    @Html.DisplayNameFor(model => model.Order.User.Username)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Order.User.Username)
+                </dd>
+
+                <dt class="col-sm-3 font-weight-bold">
+                    @Html.DisplayNameFor(model => model.Order.TotalAmount)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Order.TotalAmount)
+                </dd>
+
+                <dt class="col-sm-3 font-weight-bold">
+                    @Html.DisplayNameFor(model => model.Order.CreatedAt)
+                </dt>
+                <dd class="col-sm-9">
+                    @Html.DisplayFor(model => model.Order.CreatedAt)
+                </dd>
+
+                <dt class="col-sm-3 font-weight-bold">
+                    @Html.DisplayNameFor(model => model.Order.Status)
+                </dt>
+                <dd class="col-sm-9">
+                    <span class="badge badge-pill
+                        @(Model.Order.Status == "Pending" ? "badge-warning" :
+                        Model.Order.Status == "Shipped" ? "badge-info" :
+                        Model.Order.Status == "Completed" ? "badge-success" :
+                        "badge-danger")">
+                        @Html.DisplayFor(model => model.Order.Status)
+                    </span>
+                </dd>
+            </dl>
+        </div>
+    </div>
+
+    <div class="card mt-4 shadow-sm">
+        <div class="card-header bg-secondary text-white">
+            <h4 class="mb-0">Order Items</h4>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Product</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Subtotal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var detail in Model.Order.OrderDetails)
+                    {
+                        <tr>
+                            <td>@detail.Product.Name</td>
+                            <td>@detail.Quantity</td>
+                            <td>@detail.Price.ToString("C")</td>
+                            <td>@((detail.Quantity * detail.Price).ToString("C"))</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="text-center mt-4">
+        <a asp-page="./Edit" asp-route-id="@Model.Order.Id" class="btn btn-warning btn-lg">Edit Order</a>
+        <a asp-page="./Index" class="btn btn-secondary btn-lg">Back to List</a>
+    </div>
+</div>

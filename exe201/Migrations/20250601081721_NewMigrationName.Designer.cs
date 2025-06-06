@@ -12,8 +12,8 @@ using exe201.Models;
 namespace exe201.Migrations
 {
     [DbContext(typeof(EcommerceContext))]
-    [Migration("20250531084351_RemoveUniqueFromUsername")]
-    partial class RemoveUniqueFromUsername
+    [Migration("20250601081721_NewMigrationName")]
+    partial class NewMigrationName
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -135,8 +135,7 @@ namespace exe201.Migrations
 
                     b.Property<string>("Status")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<decimal>("TotalAmount")
                         .HasColumnType("decimal(18,2)");

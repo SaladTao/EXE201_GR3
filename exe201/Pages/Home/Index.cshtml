@@ -56,25 +56,26 @@
 									và gìn giữ nét đẹp văn hóa Việt.
 								</p>
 								<div class="btn-wrap">
-									<a href="#" class="btn btn-outline-accent btn-accent-arrow">Read More<i
-											class="icon icon-ns-arrow-right"></i></a>
+									<a href="/Home/About" class="btn btn-outline-accent btn-accent-arrow">
+										Read More<i class="icon icon-ns-arrow-right"></i></a>
 								</div>
 							</div><!--banner-content-->
-							<img src="images/main-banner1.jpg" alt="banner" class="banner-image">
+							<img src="~/images/bannerEXE.png" width="400" height="400" alt="banner" class="banner-image">
 						</div><!--slider-item-->
 
+					
 						<div class="slider-item">
 							<div class="banner-content">
-								<h2 class="banner-title vietnamese-font">Cam Kết Sản Phẩm</h2>
+								<h1 class="banner-title vietnamese-font">Cam Kết Sản Phẩm</h1>
 								<p>Tại Ecoloom, mỗi sản phẩm đều được làm thủ công từ nguyên liệu tự nhiên, không hóa chất độc hại, đảm bảo an toàn cho người dùng và thân thiện với môi trường. Chúng tôi cam kết về chất lượng, độ bền và tính thẩm mỹ trong từng đường nét, đồng hành cùng khách hàng trong lối sống xanh và bền vững..</p>
 								<div class="btn-wrap">
-									<a href="#" class="btn btn-outline-accent btn-accent-arrow">Read More<i
-											class="icon icon-ns-arrow-right"></i></a>
+									<a href="/Home/About" class="btn btn-outline-accent btn-accent-arrow">
+										Read More<i class="icon icon-ns-arrow-right"></i>
+									</a>
 								</div>
 							</div><!--banner-content-->
-							<img src="images/main-banner2.jpg" alt="banner" class="banner-image">
-						</div><!--slider-item-->
-
+							<img src="~/images/Baner2.jpg" width="400" height="400" alt="banner" class="banner-image">
+						</div>
 					</div><!--slider-->
 
 					<button class="next slick-arrow">
@@ -113,10 +114,10 @@
 								
 									<h3 class="item-title">@Model.product.Name</h3>
 									<p>@Model.product.Description</p>
-									<div class="item-price">@Model.product.Price</div>
+									<div class="item-price">@Model.product.Price.ToString("N0") VNĐ</div>
 									<div class="btn-wrap">
-										<a href="#" class="btn-accent-arrow">Mua Ngay<i
-												class="icon icon-ns-arrow-right"></i></a>
+										<a href="/Home/DetailsProduct?productId=@Model.product.Id" class="btn-accent-arrow">
+											Mua Ngay<i class="icon icon-ns-arrow-right"></i></a>
 									</div>
 								</div>
 
