@@ -5,6 +5,7 @@
     ViewData["Title"] = "Chi Tiết Sản Phẩm";
     var userId = HttpContext.Session.GetInt32("UserId");
     var username = HttpContext.Session.GetString("Username");
+
     
 
 }
@@ -97,10 +98,21 @@
             {
                 <form method="post" asp-page-handler="AddToCart">
                     <input type="hidden" name="productId" value="@Model.Product.Id" />
+                    <input type="hidden" id="selectedSize" name="selectedSize" />
+
                     <button type="submit" class="btn btn-warning btn-lg w-100 fw-bold text-white" style="background-color: darkorange;">
                         THÊM VÀO GIỎ HÀNG <i class="bi bi-cart-plus ms-2"></i>
                     </button>
                 </form>
+
+                <script>
+                    // Trước khi submit, gán size vào input ẩn
+                    document.querySelector('form').addEventListener('submit', function (e) {
+                        var size = document.getElementById('sizeSelect').value;
+                        document.getElementById('selectedSize').value = size;
+                    });
+                </script>
+
             }
             else
             {

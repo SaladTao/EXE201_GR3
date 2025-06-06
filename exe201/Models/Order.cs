@@ -19,10 +19,10 @@ namespace exe201.Models
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 
         [Required]
-<<<<<<< HEAD
+
         [EnumDataType(typeof(OrderStatus))]
-=======
->>>>>>> phan
+
+
         public string Status { get; set; } = OrderStatus.Pending.ToString();
 
         // Quan hệ
