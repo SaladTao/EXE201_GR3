@@ -11,9 +11,9 @@ namespace exe201.Pages.Cart
 {
     public class IndexModel : PageModel
     {
-        private readonly exe201.Data.exe201Context _context;
+        private readonly EcommerceContext _context;
 
-        public IndexModel(exe201.Data.exe201Context context)
+        public IndexModel(EcommerceContext context)
         {
             _context = context;
         }
