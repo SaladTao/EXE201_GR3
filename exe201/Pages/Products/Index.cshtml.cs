@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using exe201.Data;
 using exe201.Models;
 using Cart = exe201.Models.Cart;
 using CartItem = exe201.Models.CartItem;
@@ -10,9 +9,9 @@ namespace exe201.Pages.Products
 {
     public class IndexModel : PageModel
     {
-        private readonly exe201Context _context;
+        private readonly EcommerceContext _context;
 
-        public IndexModel(exe201Context context)
+        public IndexModel(EcommerceContext context)
         {
             _context = context;
         }
