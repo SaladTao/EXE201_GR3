@@ -1,4 +1,6 @@
-﻿namespace exe201.Models
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace exe201.Models
 {
     public class Story
     {
@@ -7,7 +9,8 @@
         public string ImageUrl { get; set; }          
         public string Description { get; set; }        
         public DateTime PostedDate { get; set; }       
-        public string Category { get; set; }          
+        public string Category { get; set; }
+
     }
 
     public static class StoryRepository
