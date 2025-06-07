@@ -19,6 +19,10 @@ namespace exe201.Models
         public DateTime CreatedAt { get; set; } = DateTime.Now;
 
         [Required]
+
+        [EnumDataType(typeof(OrderStatus))]
+
+
         public string Status { get; set; } = OrderStatus.Pending.ToString();
 
         // Quan hệ
@@ -31,7 +35,7 @@ namespace exe201.Models
     {
         Pending,
         Completed,
-        Shipping,
+        Shipped,
         Cancelled
     }
 }

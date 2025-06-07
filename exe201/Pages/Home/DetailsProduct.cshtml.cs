@@ -32,10 +32,11 @@ namespace exe201.Pages.Home
 
             if (Product == null)
             {
-                return NotFound();
+                return NotFound(); // <- xử lý khi không tìm thấy sản phẩm
             }
 
             return Page();
         }
+      
     }
 }
