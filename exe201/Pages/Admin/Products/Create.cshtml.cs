@@ -21,7 +21,12 @@ namespace exe201.Pages.Admin.Products
 
         public IActionResult OnGet()
         {
-        ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name");
+            var userIdStr = HttpContext.Session.GetString("UserId");
+            if (string.IsNullOrEmpty(userIdStr))
+            {
+                return RedirectToPage("/Login/Index");
+            }
+            ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name");
             return Page();
         }
 
@@ -31,6 +36,11 @@ namespace exe201.Pages.Admin.Products
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
+            var userIdStr = HttpContext.Session.GetString("UserId");
+            if (string.IsNullOrEmpty(userIdStr))
+            {
+                return RedirectToPage("/Login/Index");
+            }
             // Kiểm tra trùng tên sản phẩm
             bool isDuplicateName = await _context.Products.AnyAsync(p => p.Name == Product.Name);
             if (isDuplicateName)

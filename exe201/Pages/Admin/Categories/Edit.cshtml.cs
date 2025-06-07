@@ -24,6 +24,11 @@ namespace exe201.Pages.Admin.Categories
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
+            var userIdStr = HttpContext.Session.GetString("UserId");
+            if (string.IsNullOrEmpty(userIdStr))
+            {
+                return RedirectToPage("/Login/Index");
+            }
             if (id == null)
             {
                 return NotFound();
@@ -42,7 +47,11 @@ namespace exe201.Pages.Admin.Categories
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-
+            var userIdStr = HttpContext.Session.GetString("UserId");
+            if (string.IsNullOrEmpty(userIdStr))
+            {
+                return RedirectToPage("/Login/Index");
+            }
 
             // Kiểm tra tên danh mục đã tồn tại (trừ chính nó)
             bool nameExists = await _context.Categories

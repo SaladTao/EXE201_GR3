@@ -20,7 +20,12 @@ namespace exe201.Pages.Admin.Orders
 
         public IActionResult OnGet()
         {
-        ViewData["UserId"] = new SelectList(_context.Users, "Id", "Email");
+            var userIdStr = HttpContext.Session.GetString("UserId");
+            if (string.IsNullOrEmpty(userIdStr))
+            {
+                return RedirectToPage("/Login/Index");
+            }
+            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Email");
             return Page();
         }
 
@@ -30,6 +35,11 @@ namespace exe201.Pages.Admin.Orders
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
+            var userIdStr = HttpContext.Session.GetString("UserId");
+            if (string.IsNullOrEmpty(userIdStr))
+            {
+                return RedirectToPage("/Login/Index");
+            }
             if (!ModelState.IsValid)
             {
                 return Page();

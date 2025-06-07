@@ -24,6 +24,11 @@ namespace exe201.Pages.Admin.Users
 
         public IActionResult OnGet()
         {
+            var userIdStr = HttpContext.Session.GetString("UserId");
+            if (string.IsNullOrEmpty(userIdStr))
+            {
+                return RedirectToPage("/Login/Index");
+            }
             User = new User { Profile = new UserProfile() };
             RoleOptions = new SelectList(Enum.GetValues(typeof(UserRole))
                                     .Cast<UserRole>()
@@ -34,7 +39,11 @@ namespace exe201.Pages.Admin.Users
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-
+            var userIdStr = HttpContext.Session.GetString("UserId");
+            if (string.IsNullOrEmpty(userIdStr))
+            {
+                return RedirectToPage("/Login/Index");
+            }
             _context.Users.Add(User);
             await _context.SaveChangesAsync();
             
