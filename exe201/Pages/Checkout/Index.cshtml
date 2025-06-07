@@ -1,0 +1,10 @@
+﻿@page
+@model exe201.Pages.Checkout.IndexModel
+@{
+    ViewData["Title"] = "Xác nhận đơn hàng";
+}
+
+<h2>Đơn hàng đã được tạo!</h2>
+<p>Cảm ơn bạn đã mua sắm. Mã đơn hàng: <strong>@Model.OrderId</strong></p>
+
+<a asp-page="/Products/Index" class="btn btn-primary">Tiếp tục mua hàng</a>

@@ -1,0 +1,40 @@
+﻿@page
+@model exe201.Pages.Cart.IndexModel
+@{
+    ViewData["Title"] = "Giỏ hàng";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h2>Giỏ hàng của bạn</h2>
+
+@if (Model.CartItems.Count == 0)
+{
+    <p>Giỏ hàng đang trống.</p>
+}
+else
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Sản phẩm</th>
+                <th>Hình ảnh</th>
+                <th>Giá</th>
+                <th>Số lượng</th>
+                <th>Thành tiền</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.CartItems)
+            {
+                <tr>
+                    <td>@item.Product.Name</td>
+                    <td><img src="@item.Product.ImageUrl" style="width: 100px;" /></td>
+                    <td>@item.Product.Price.ToString("N0")</td>
+                    <td>@item.Quantity</td>
+                    <td>@(item.Quantity * item.Product.Price).ToString("N0")</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <a class="btn btn-success" asp-page="/Checkout/Index">Tiến hành thanh toán</a>
+}
