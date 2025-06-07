@@ -1,4 +1,5 @@
-﻿using exe201.Models;
+﻿using exe201.Data;
+using exe201.Models;
 using exe201.Repository;
 using exe201.Repository.Order;
 using exe201.Repository.OrderDetail;
@@ -9,16 +10,19 @@ using exe201.Service.Product;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 
 // Add DbContexts
-builder.Services.AddDbContext<EcommerceContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DbContext") ?? throw new InvalidOperationException("Connection string 'DbContext' not found.")));
+builder.Services.AddDbContext<exe201Context>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("exe201Context") ??
+        throw new InvalidOperationException("Connection string 'exe201Context' not found.")));
 
+builder.Services.AddDbContext<EcommerceContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DbContext") ??
+        throw new InvalidOperationException("Connection string 'DbContext' not found.")));
 
 // Add session services and cache BEFORE build
 builder.Services.AddDistributedMemoryCache();
@@ -39,7 +43,6 @@ builder.Services.AddScoped<ProductService>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddScoped<IUserService, UserService>();
-
 
 var app = builder.Build();
 

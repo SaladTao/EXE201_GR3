@@ -6,7 +6,7 @@
 
 <h2>Chi tiết đơn hàng #@Model.Order.Id</h2>
 
-<p><strong>Ngày đặt:</strong> @Model.Order.OrderDate.ToString("dd/MM/yyyy HH:mm")</p>
+<p><strong>Ngày đặt:</strong> @Model.Order.CreatedAt.("dd/MM/yyyy HH:mm")</p>
 <p><strong>Trạng thái:</strong> @Model.Order.Status</p>
 
 <table class="table table-bordered">
