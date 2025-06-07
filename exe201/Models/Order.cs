@@ -11,21 +11,12 @@ namespace exe201.Models
 
         public int UserId { get; set; }
 
-        public DateTime OrderDate { get; set; } = DateTime.Now;
-
-        //Add Name, Address and Phone
-        public string Name { get; set; }
-        public string Description { get; set; }
-        public decimal Price { get; set; }
-        public decimal Balance { get; set; }
-         
-        public string Phone { get; set; }
-        public string Address { get; set; }
+   
 
         [Column(TypeName = "decimal(18,2)")]
-        public decimal TotalAmount { get; set; }
+        public decimal  TotalAmount { get; set; }
 
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public DateTime? CreatedAt { get; set; } = DateTime.Now;
 
         [Required]
         public string Status { get; set; } = OrderStatus.Pending.ToString();

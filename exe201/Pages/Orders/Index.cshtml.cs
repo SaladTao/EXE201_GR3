@@ -27,7 +27,7 @@ namespace exe201.Pages.Orders
 
             Orders = await _context.Orders
                 .Where(o => o.UserId == userId)
-                .OrderByDescending(o => o.OrderDate)
+                .OrderByDescending(o => o.CreatedAt)
                 .ToListAsync();
 
             return Page();
