@@ -13,6 +13,15 @@ namespace exe201.Models
 
         public DateTime OrderDate { get; set; } = DateTime.Now;
 
+        //Add Name, Address and Phone
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public decimal Price { get; set; }
+        public decimal Balance { get; set; }
+         
+        public string Phone { get; set; }
+        public string Address { get; set; }
+
         [Column(TypeName = "decimal(18,2)")]
         public decimal TotalAmount { get; set; }
 

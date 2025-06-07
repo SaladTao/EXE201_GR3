@@ -2,25 +2,19 @@
 @model exe201.Pages.Cart.IndexModel
 @{
     ViewData["Title"] = "Giỏ hàng";
-    Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<h2>Giỏ hàng của bạn</h2>
+<h1>Giỏ hàng của bạn</h1>
 
-@if (Model.CartItems.Count == 0)
+@if (Model.CartItems != null && Model.CartItems.Any())
 {
-    <p>Giỏ hàng đang trống.</p>
-}
-else
-{
-    <table class="table table-bordered">
+    <table class="table">
         <thead>
             <tr>
-                <th>Sản phẩm</th>
-                <th>Hình ảnh</th>
-                <th>Giá</th>
-                <th>Số lượng</th>
-                <th>Thành tiền</th>
+                <th>Product Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Action</th>
             </tr>
         </thead>
         <tbody>
@@ -28,13 +22,21 @@ else
             {
                 <tr>
                     <td>@item.Product.Name</td>
-                    <td><img src="@item.Product.ImageUrl" style="width: 100px;" /></td>
-                    <td>@item.Product.Price.ToString("N0")</td>
                     <td>@item.Quantity</td>
-                    <td>@(item.Quantity * item.Product.Price).ToString("N0")</td>
+                    <td>@item.Product.Price.ToString("C")</td>
+                    <td>
+                        <a href="@Url.Page("Edit", new { id = item.Id })">Sửa</a> |
+                        <a href="@Url.Page("Delete", new { id = item.Id })">Xóa</a>
+                    </td>
                 </tr>
             }
         </tbody>
     </table>
-    <a class="btn btn-success" asp-page="/Checkout/Index">Tiến hành thanh toán</a>
+    <h3>Tổng cộng: @Model.TotalAmount.ToString("C")</h3>
+    <a href="@Url.Page("Checkout")" class="btn btn-primary">Tiến hành thanh toán</a>
 }
+else
+{
+    <p>Giỏ hàng của bạn đang trống.</p>
+}
+        

@@ -1,38 +1,36 @@
-using exe201.Models;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Http;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using exe201.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace exe201.Pages.Cart
 {
     public class IndexModel : PageModel
     {
-        private readonly exe201.Data.exe201Context _context;
+        private readonly EcommerceContext _context;
 
-        public IndexModel(exe201.Data.exe201Context context)
+        public IndexModel(EcommerceContext context)
         {
             _context = context;
         }
 
-        public List<CartItem> CartItems { get; set; }
+        public IList<CartItem> CartItems { get; set; }
+        public decimal TotalAmount { get; set; }
 
-        public async Task<IActionResult> OnGetAsync()
+        public void OnGet()
         {
-            var userId = HttpContext.Session.GetInt32("UserId");
-            if (userId == null) return RedirectToPage("/Login/Index");
+            var userId = 1; // Giả sử ID người dùng hiện tại là 1 (có thể lấy từ Session hoặc Cookie)
 
-            var cart = await _context.Carts
-                            .Include(c => c.CartItems)
-                                .ThenInclude(ci => ci.Product)
-                            .FirstOrDefaultAsync(c => c.UserId == userId);
+            // Lấy các mục trong giỏ hàng của người dùng
+            CartItems = _context.CartItems
+                                 .Where(ci => ci.Cart.UserId == userId)
+                                 .Include(ci => ci.Product)
+                                 .ToList();
 
-            CartItems = cart?.CartItems?.ToList() ?? new List<CartItem>();
-
-            return Page();
+            // Tính tổng tiền của giỏ hàng
+            TotalAmount = CartItems.Sum(ci => ci.Quantity * ci.Product.Price);
         }
     }
 }
