@@ -22,6 +22,11 @@ namespace exe201.Pages.Admin.Products
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
+            var userIdStr = HttpContext.Session.GetString("UserId");
+            if (string.IsNullOrEmpty(userIdStr))
+            {
+                return RedirectToPage("/Login/Index");
+            }
             if (id == null)
             {
                 return NotFound();

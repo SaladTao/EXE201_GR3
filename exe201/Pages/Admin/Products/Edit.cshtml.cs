@@ -24,6 +24,11 @@ namespace exe201.Pages.Admin.Products
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
+            var userIdStr = HttpContext.Session.GetString("UserId");
+            if (string.IsNullOrEmpty(userIdStr))
+            {
+                return RedirectToPage("/Login/Index");
+            }
             if (id == null)
             {
                 return NotFound();
@@ -43,7 +48,11 @@ namespace exe201.Pages.Admin.Products
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-
+            var userIdStr = HttpContext.Session.GetString("UserId");
+            if (string.IsNullOrEmpty(userIdStr))
+            {
+                return RedirectToPage("/Login/Index");
+            }
             var productToUpdate = await _context.Products.FirstOrDefaultAsync(o => o.Id == Product.Id);
 
             if (productToUpdate == null)

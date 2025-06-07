@@ -47,9 +47,9 @@ namespace exe201.Pages.Login
             HttpContext.Session.SetString("UserRole", user.Role); // <-- lưu Role vào session
 
             // Phân quyền chuyển hướng
-            if (user.Role == "administrator")
+            if (user.Role == "Admin")
             {
-                return RedirectToPage("/Admin/Dashboard");
+                return RedirectToPage("/Admin/Index");
             }
 
             // Mặc định là Customer → về trang chủ

@@ -30,8 +30,14 @@ namespace exe201.Pages.Admin.Orders
         public int TotalPages { get; set; }
         public int PageSize { get; set; } = 2;
 
-        public async Task OnGetAsync(int? pageNumber)
+        public async Task<IActionResult> OnGetAsync(int? pageNumber)
         {
+            var userIdStr = HttpContext.Session.GetString("UserId");
+            if (string.IsNullOrEmpty(userIdStr))
+            {
+                return RedirectToPage("/Login/Index");
+            }
+
             if (pageNumber.HasValue)
                 CurrentPage = pageNumber.Value;
 
@@ -57,6 +63,9 @@ namespace exe201.Pages.Admin.Orders
                 .Skip((CurrentPage - 1) * PageSize)
                 .Take(PageSize)
                 .ToListAsync();
+
+            return Page(); // Don't forget this!
         }
+
     }
 }

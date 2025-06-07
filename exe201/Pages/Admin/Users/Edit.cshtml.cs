@@ -25,6 +25,11 @@ namespace exe201.Pages.Admin.Users
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
+            var userIdStr = HttpContext.Session.GetString("UserId");
+            if (string.IsNullOrEmpty(userIdStr))
+            {
+                return RedirectToPage("/Login/Index");
+            }
             if (id == null)
             {
                 return NotFound();
@@ -46,7 +51,11 @@ namespace exe201.Pages.Admin.Users
         // For more information, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-
+            var userIdStr = HttpContext.Session.GetString("UserId");
+            if (string.IsNullOrEmpty(userIdStr))
+            {
+                return RedirectToPage("/Login/Index");
+            }
             // Lấy user gốc từ DB kèm theo profile để update
             var userToUpdate = await _context.Users
                                 .Include(u => u.Profile)
