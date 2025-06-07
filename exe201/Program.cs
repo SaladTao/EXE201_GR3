@@ -15,10 +15,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 
 // Add DbContexts
-//builder.Services.AddDbContext<EcommerceContext>(options =>
-//    options.UseSqlServer(builder.Configuration.GetConnectionString("DbContext") ?? throw new InvalidOperationException("Connection string 'DbContext' not found.")));
 builder.Services.AddDbContext<EcommerceContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DbContext") ?? throw new InvalidOperationException("Connection string 'DbContext' not found.")));
+builder.Services.AddDbContext<EcommerceContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DbContext")));
 
 
 // Add session services and cache BEFORE build
@@ -42,11 +42,13 @@ builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 
 
 var app = builder.Build();
-using (var scope = app.Services.CreateScope())
+var connString = builder.Configuration.GetConnectionString("DbContext");
+if (string.IsNullOrEmpty(connString))
 {
-    var db = scope.ServiceProvider.GetRequiredService<EcommerceContext>();
-    db.Database.Migrate();
+    throw new Exception("Connection string 'DefaultConnection' is null or empty!");
 }
+Console.WriteLine($"Connection string: {connString}");
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
