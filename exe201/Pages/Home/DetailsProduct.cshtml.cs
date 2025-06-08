@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using exe201.Models;  // namespace chứa Product model
+using exe201.Models;
+using System.ComponentModel.DataAnnotations;  // namespace chứa Product model
 
 namespace exe201.Pages.Home
 {
@@ -13,7 +15,9 @@ namespace exe201.Pages.Home
         {
             _context = context;
         }
-
+        [BindProperty]
+        [Range(1, 100, ErrorMessage = "Số lượng phải từ 1 đến 100.")]
+        public int Quantity { get; set; }
         [BindProperty(SupportsGet = true)]
         public int productId { get; set; }
 

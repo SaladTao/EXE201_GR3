@@ -28,6 +28,24 @@
 		.vietnamese-font p {
 			margin-bottom: 1em;
 		}
+
+	.feedback-img {
+		width: 100%;
+		aspect-ratio: 1 / 1; /* Đảm bảo hình vuông */
+		object-fit: cover;
+		border-radius: 15px; /* Bo góc mềm mại */
+		border: 1px solid #ddd;
+		padding: 4px;
+		background: #fff;
+		box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+		width: 330px;
+		height: 330px;
+	}
+
+	.feedback-item {
+		margin-bottom: 30px;
+	}
+
 </style>
 
 
@@ -50,10 +68,7 @@
 							<div class="banner-content">
 								<h2 class="banner-title vietnamese-font">Về Ecoloom</h2>
 								<p>
-									Ecoloom là doanh nghiệp tiên phong trong lĩnh vực sản xuất các sản phẩm mây tre đan thủ công,
-									kết hợp giữa nghệ thuật truyền thống và xu hướng sống xanh hiện đại. Chúng tôi cam kết mang đến
-									những giải pháp trang trí và tiêu dùng thân thiện với môi trường, góp phần bảo vệ hành tinh
-									và gìn giữ nét đẹp văn hóa Việt.
+									Khám phá các sản phẩm thủ công từ mây tre đan mang nét đẹp truyền thống pha lẫn hơi thở hiện đại – thời trang, trang trí, tiện dụng và thân thiện với môi trường.
 								</p>
 								<div class="btn-wrap">
 									<a href="/Home/About" class="btn btn-outline-accent btn-accent-arrow">
@@ -169,7 +184,7 @@
 												<h3>
 													<a href="/Home/DetailsProduct?productId=@item.Id">@item.Name</a>
 												</h3>
-												<span>@item.Description</span>
+												<span>@item.Price.ToString("N0") VNĐ</span>
 
 											</figcaption>
 										</div>
@@ -210,8 +225,76 @@
 			</div><!--inner-tabs-->
 
 		</div>
+
+	</section>
+
+
+	<section id="featured-feedback" class="py-5 my-5">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+
+					<div class="section-header align-center">
+						<div class="title">
+							<span>Người thật – Cảm nhận thật</span>
+						</div>
+						<h2 class="section-title vietnamese-font">Khách hàng nói gì về Ecoloom?</h2>
+					</div>
+
+					<div class="product-list" data-aos="fade-up">
+						<div class="row">
+
+							<!-- Feedback 1 -->
+							<div class="col-md-4">
+								<div class="product-item text-center">
+									<figure class="product-style">
+										<img src="~/images/main-logo.png" alt="Feedback 1" class="product-item">
+									</figure>
+									<figcaption>
+										<h3 class="vietnamese-font">Minh</h3>
+										<span>Chủ quán cà phê</span>
+										<p class="mt-3">“Giỏ mây của Ecoloom đi đâu ai cũng hỏi mua, đẹp và chắc chắn!”</p>
+									</figcaption>
+								</div>
+							</div>
+
+							<!-- Feedback 2 -->
+							<div class="col-md-4">
+								<div class="product-item text-center">
+									<figure class="product-style">
+										<img src="~/images/main-logo.png" alt="Feedback 2" class="product-item">
+									</figure>
+									<figcaption>
+										<h3 class="vietnamese-font">Lan Anh</h3>
+										<span>Chủ homestay Đà Lạt</span>
+										<p class="mt-3">“Mình đặt đèn decor riêng cho homestay – cực kỳ ưng!”</p>
+									</figcaption>
+								</div>
+							</div>
+
+							<!-- Feedback 3 -->
+							<div class="col-md-4">
+								<div class="product-item text-center">
+									<figure class="product-style">
+										<img src="~/images/main-logo.png" alt="Feedback 3" class="feedback-img">
+									</figure>
+									<figcaption>
+										<h3 class="vietnamese-font">Huyền</h3>
+										<span>Khách hàng Hà Nội</span>
+										<p class="mt-3">“Đồ đẹp, đóng gói cẩn thận, giao hàng nhanh – vote 5 sao”</p>
+									</figcaption>
+								</div>
+							</div>
+
+						</div>
+					</div>
+
+				</div>
+			</div>
 		</div>
 	</section>
+
+
 
 	<section id="quotation" class="align-center pb-5 mb-5">
 		<div class="inner-content">
