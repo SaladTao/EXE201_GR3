@@ -99,11 +99,10 @@
                     <img src="@Model.Story.ImageUrl" alt="@Model.Story.Title" class="story-image" />
                 }
 
-                <p class="story-description">
-                    @(!string.IsNullOrWhiteSpace(Model.Story.Description)
-                        ? Model.Story.Description
-                        : "Nội dung câu chuyện đang được cập nhật...")
-                </p>
+                <div class="story-description">
+                    @Html.Raw(Model.GetFormattedDescription(Model.Story.Description))
+                </div>
+
 
                 <a asp-page="/Home/Story"
                    asp-route-PageNumber="@Model.PageNumber"
