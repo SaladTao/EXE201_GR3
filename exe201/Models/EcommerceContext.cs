@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Reflection.Emit;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace exe201.Models
 {
@@ -26,7 +24,8 @@ namespace exe201.Models
                 .HasIndex(u => u.Username).IsUnique();
             modelBuilder.Entity<User>()
                 .HasIndex(u => u.Email).IsUnique();
+             
+            base.OnModelCreating(modelBuilder);
         }
     }
-
 }

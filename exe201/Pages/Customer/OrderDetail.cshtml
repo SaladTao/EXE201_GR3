@@ -32,23 +32,6 @@
             color: #343a40;
         }
 
-        body {
-            background-color: #f5f3ed;
-            font-family: 'Poppins', sans-serif;
-        }
-
-        h1, h2, h3, .page-title {
-            font-family: 'Playfair Display', serif;
-        }
-
-        .page-title {
-            font-size: 2.5rem;
-            font-weight: 600;
-            text-align: center;
-            margin-bottom: 2rem;
-            color: #343a40;
-        }
-
         .table-container {
             background: #fff;
             padding: 2rem;
@@ -76,6 +59,11 @@
             color: #6c757d;
         }
 
+        .description-content img {
+            display: block;
+            margin: 10px auto;
+        }
+
         a {
             color: #007bff;
             text-decoration: none;
@@ -95,7 +83,6 @@
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        
                         <th>Mã đơn hàng</th>
                         <th>Hình ảnh</th>
                         <th>Sản phẩm</th>
@@ -123,9 +110,18 @@
             {
                 <p class="text-muted mt-3">Chưa có đơn hàng nào cho sản phẩm này.</p>
             }
+
             <a href="/Customer/Order">Quay trở lại</a>
         </div>
-    </div>
 
+        @foreach (var od in Model.OrderDetails)
+        {
+            <div class="mt-5 p-4 bg-white rounded shadow-sm">
+                <h5 class="mb-3">Mô tả sản phẩm: @od.Product.Name</h5>
+                <div class="description-content" style="line-height: 1.7;">
+                </div>
+            </div>
+        }
+    </div>
 </body>
 </html>

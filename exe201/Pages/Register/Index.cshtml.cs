@@ -42,6 +42,7 @@ namespace exe201.Pages.Register
                 Email = Input.Email,
                 Password = Input.Password,
                 Username = Input.FullName,
+                CreatedAt = DateTime.UtcNow,
                 Role = UserRole.Customer.ToString()
             };
 
