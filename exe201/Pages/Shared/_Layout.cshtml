@@ -102,6 +102,12 @@
 							<a href="/Cart/Index" class="cart for-buy">
 								<i class="icon icon-clipboard"></i><span>Giỏ Hàng</span>
 							</a>
+							@if (isLoggedIn)
+							{
+								<a href="/Cart/OrderHistory" class="cart for-buy">
+									<i class="icon icon-file-text"></i><span>Lịch Sử Đơn Hàng</span>
+								</a>
+							}
 						</div>
 					</div>
 				</div>
