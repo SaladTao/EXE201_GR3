@@ -9,16 +9,25 @@ namespace exe201.Models
     {
         public EcommerceContext CreateDbContext(string[] args)
         {
-            IConfigurationRoot configuration = new ConfigurationBuilder()
-                .SetBasePath(Directory.GetCurrentDirectory())
-                .AddJsonFile("appsettings.json")
+            var basePath = Directory.GetCurrentDirectory();
+            Console.WriteLine($"Current Directory: {basePath}");
+
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(basePath)
+                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
                 .Build();
 
-            var builder = new DbContextOptionsBuilder<EcommerceContext>();
-            var connectionString = configuration.GetConnectionString("DefaultConnection");
-            builder.UseNpgsql(connectionString);
+            var connectionString = configuration.GetConnectionString("PostgreSqlConnection");
+            Console.WriteLine($"Connection String: {connectionString ?? "NULL"}");
+            if (string.IsNullOrEmpty(connectionString))
+            {
+                throw new InvalidOperationException("Connection string 'PostgreSqlConnection' not found. Check appsettings.json or current directory.");
+            }
 
-            return new EcommerceContext(builder.Options);
+            var optionsBuilder = new DbContextOptionsBuilder<EcommerceContext>();
+            optionsBuilder.UseNpgsql(connectionString);
+
+            return new EcommerceContext(optionsBuilder.Options);
         }
     }
 }

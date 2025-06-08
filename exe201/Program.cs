@@ -15,10 +15,11 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 
 // Add DbContexts
+//builder.Services.AddDbContext<EcommerceContext>(options =>
+//    options.UseSqlServer(builder.Configuration.GetConnectionString("DbContext") ?? throw new InvalidOperationException("Connection string 'DbContext' not found.")));
+
 builder.Services.AddDbContext<EcommerceContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DbContext") ?? throw new InvalidOperationException("Connection string 'DbContext' not found.")));
-builder.Services.AddDbContext<EcommerceContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DbContext")));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("PostgreSqlConnection")));
 
 
 // Add session services and cache BEFORE build
