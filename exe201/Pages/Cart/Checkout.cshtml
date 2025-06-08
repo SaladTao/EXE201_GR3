@@ -3,6 +3,7 @@
 @{
     ViewData["Title"] = "Checkout";
 }
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
 
 <style>
     .checkout-container {
@@ -95,6 +96,42 @@
         padding-top: 1rem;
         border-top: 2px solid #eee;
     }
+
+    .vietnamese-font {
+        font-family: 'Quicksand', 'Noto Sans', 'Roboto', Arial, sans-serif;
+        font-weight: 400;
+        line-height: 1.6;
+        letter-spacing: 0.2px;
+        color: #333;
+    }
+
+        .vietnamese-font h2,
+        .vietnamese-font h3,
+        .vietnamese-font h4 {
+            font-weight: 700;
+        }
+
+        .vietnamese-font p {
+            margin-bottom: 1em;
+        }
+
+    .btn-checkout i,
+    .btn-back i {
+        font-size: 1.2rem;
+    }
+
+    .btn-back {
+        background-color: #6c757d;
+        color: white !important;
+    }
+
+    .btn-checkout,
+    .btn-back {
+        height: 60px;
+        font-weight: 600;
+        font-size: 1rem;
+    }
+
 </style>
 
 <div class="container checkout-container">
@@ -112,7 +149,7 @@
         <div class="col-md-8">
             <div class="card checkout-card mb-4">
                 <div class="checkout-header">
-                    <h4 class="mb-0">Thông tin giao hàng</h4>
+                    <h4 class="mb-0 vietnamese-font">Thông tin giao hàng</h4>
                 </div>
                 <div class="checkout-body">
                     <form method="post">
@@ -134,10 +171,24 @@
                             <span asp-validation-for="Phone" class="text-danger"></span>
                         </div>
 
-                        <div class="d-flex justify-content-between mt-4">
-                            <a href="/Cart/Index" class="btn btn-back">Quay lại giỏ hàng</a>
-                            <button type="submit" class="btn btn-checkout">Đặt hàng</button>
+                        <div class="row mt-4">
+                            <div class="col-6 pe-2">
+                                <div class="d-grid h-100">
+                                    <a href="/Cart/Index" class="btn btn-back w-100 h-100 d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-arrow-left me-2"></i> Quay lại giỏ hàng
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="col-6 ps-2">
+                                <div class="d-grid h-100">
+                                    <button type="submit" class="btn btn-checkout w-100 h-100 d-flex align-items-center justify-content-center">
+                                        <i class="bi bi-check2-circle me-2"></i> Đặt hàng
+                                    </button>
+                                </div>
+                            </div>
                         </div>
+
+
                     </form>
                 </div>
             </div>
@@ -154,7 +205,7 @@
                             <div class="order-item">
                                 <div class="d-flex justify-content-between align-items-center">
                                     <div>
-                                        <h6 class="mb-1">@item.Product.Name</h6>
+                                        <h6 class="mb-1 vietnamese-font">@item.Product.Name</h6>
                                         <small class="text-muted">Số lượng: @item.Quantity</small>
                                     </div>
                                     <span>@((item.Product.Price * item.Quantity).ToString("N0")) VNĐ</span>

@@ -168,7 +168,7 @@
 		<div class="row">
 			<div class="col-md-4 mb-4">
 				<div class="sidebar">
-					<h2 class="sidebar-title">Lọc theo hạng mục</h2>
+					<h2 class="sidebar-title vietnamese-font">Lọc theo hạng mục</h2>
 					<form asp-page="/Home/Story" method="get">
 						<div class="mb-3">
 							<select name="SelectedCategory" class="form-select" onchange="this.form.submit()">
@@ -213,7 +213,7 @@
 										{
 											<img src="https://via.placeholder.com/250x180?text=No+Image" alt="No Image" class="story-image" />
 										}
-										<h3 class="story-title">@story.Title</h3>
+										<h3 class="story-title vietnamese-font">@story.Title</h3>
 										<div class="story-meta">
 											<span>Ngày đăng: @story.PostedDate.ToString("dd/MM/yyyy")</span>
 											<br />

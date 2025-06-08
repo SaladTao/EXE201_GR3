@@ -33,11 +33,11 @@
                 <div class="row" style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;">
                     @foreach (var item in Model.products)
                     {
-                        <div class="col-md-4">
+                        <div class="col-md-3">
                             <div class="product-item">
                                 <figure class="product-style">
                                     <a href="/Home/DetailsProduct?productId=@item.Id">
-                                        <img src="/images/client-image1.png" alt="@item.Name" class="product-item" />
+                                        <img src="@Url.Content(item.ImageUrl)" alt="@item.Name" class="product-item" />
                                     </a>
                                     <button type="button" class="add-to-cart" data-product-tile="add-to-cart">Xem Chi Tiết</button>
                                 </figure>
@@ -45,7 +45,7 @@
                                     <h3 class="vietnamese-font">
                                         <a href="/Home/DetailsProduct?productId=@item.Id">@item.Name</a>
                                     </h3>
-                                    <span>@item.Description</span>
+                                    <span>@item.Price.ToString("N0") VNĐ</span>
                                 </figcaption>
                             </div>
                         </div>
