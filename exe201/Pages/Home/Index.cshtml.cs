@@ -18,7 +18,7 @@ namespace exe201.Pages.Home
         public List<Category> categories { get; set; }
         public void OnGet()
         {
-            product = context.Products.FirstOrDefault(p => p.Id == 3);
+            product = context.Products.FirstOrDefault(p => p.Id == 104);
             if (product == null)
             {
                 // Gán dữ liệu giả hoặc xử lý để không bị null

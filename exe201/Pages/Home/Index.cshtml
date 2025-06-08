@@ -118,7 +118,7 @@
 
 						<div class="col-md-6">
 							<figure class="products-thumb">
-								<img src="images/single-image.jpg" alt="book" class="single-image">
+								<img src="@Url.Content(Model.product.ImageUrl)" alt="book" class="single-image">
 							</figure>
 						</div>
 
@@ -128,8 +128,8 @@
 
 								<div class="products-content">
 
-									<h3 class="item-title">@Model.product.Name</h3>
-									<p>@Model.product.Description</p>
+									<h3 class="item-title vietnamese-font">@Model.product.Name</h3>
+								
 									<div class="item-price">@Model.product.Price.ToString("N0") VNĐ</div>
 									<div class="btn-wrap">
 										<a href="/Home/DetailsProduct?productId=@Model.product.Id" class="btn-accent-arrow">
@@ -176,13 +176,13 @@
 										<div class="product-item">
 											<figure class="product-style">
 												<a href="/Home/DetailsProduct?productId=@item.Id">
-													<img src="@item.ImageUrl" alt="@item.Name" class="product-item" />
+													<img src="@Url.Content(item.ImageUrl)" alt="@item.Name" class="product-item" />
 												</a>
 												<button type="button" class="add-to-cart" data-product-tile="add-to-cart">Xem Chi Tiết</button>
 											</figure>
 											<figcaption>
 												<h3>
-													<a href="/Home/DetailsProduct?productId=@item.Id">@item.Name</a>
+													<a href="/Home/DetailsProduct?productId=@item.Id" class="vietnamese-font">@item.Name</a>
 												</h3>
 												<span>@item.Price.ToString("N0") VNĐ</span>
 
@@ -276,7 +276,7 @@
 							<div class="col-md-4">
 								<div class="product-item text-center">
 									<figure class="product-style">
-										<img src="~/images/main-logo.png" alt="Feedback 3" class="feedback-img">
+										<img src="~/images/chocolat/p1-c1.jpg" alt="Feedback 3" class="feedback-img">
 									</figure>
 									<figcaption>
 										<h3 class="vietnamese-font">Huyền</h3>

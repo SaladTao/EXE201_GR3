@@ -4,6 +4,7 @@ using exe201.Repository.Order;
 using exe201.Repository.OrderDetail;
 using exe201.Repository.Product;
 using exe201.Service;
+using exe201.Service.Admin;
 using exe201.Service.Product;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,11 +16,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 
 // Add DbContexts
-//builder.Services.AddDbContext<EcommerceContext>(options =>
-//    options.UseSqlServer(builder.Configuration.GetConnectionString("DbContext") ?? throw new InvalidOperationException("Connection string 'DbContext' not found.")));
-
 builder.Services.AddDbContext<EcommerceContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("PostgreSqlConnection")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DbContext") ?? throw new InvalidOperationException("Connection string 'DbContext' not found.")));
 
 
 // Add session services and cache BEFORE build
@@ -40,16 +38,10 @@ builder.Services.AddScoped<IOrderDetailRepository, OrderDetailRepository>();
 builder.Services.AddScoped<ProductService>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 
 var app = builder.Build();
-var connString = builder.Configuration.GetConnectionString("PostgreSqlConnection");
-if (string.IsNullOrEmpty(connString))
-{
-    throw new Exception("Connection string 'PostgreSqlConnection' is null or empty!");
-}
-Console.WriteLine($"Connection string: {connString}");
-
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -67,6 +59,17 @@ app.UseRouting();
 app.UseSession();
 
 app.UseAuthorization();
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapRazorPages();
+
+    endpoints.MapGet("/", context =>
+    {
+        context.Response.Redirect("/Home/Index");
+        return Task.CompletedTask;
+    });
+});
+
 
 app.MapRazorPages();
 
