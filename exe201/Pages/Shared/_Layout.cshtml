@@ -143,7 +143,9 @@
 										<i class="icon icon-user"></i><span>Hello @username</span>
 									</a>
 									<div class="account-dropdown">
-										<a href="/Login/Logout">Đăng xuất</a>
+										<a href="/Login/Logout">Đăng Xuất</a>
+										<a href="/Customer/CustomerEdit">Chỉnh Sửa Thông Tin</a>
+										<a href="/Cart/OrderHistory">Lịch Sử Đơn Hàng</a>
 									</div>
 								}
 								else
@@ -160,12 +162,7 @@
 							<a href="/Cart/Index" class="cart for-buy">
 								<i class="icon icon-clipboard"></i><span>Giỏ Hàng</span>
 							</a>
-							@if (isLoggedIn)
-							{
-								<a href="/Cart/OrderHistory" class="cart for-buy">
-									<i class="icon icon-file-text"></i><span>Lịch Sử Đơn Hàng</span>
-								</a>
-							}
+							
 						</div>
 					</div>
 				</div>

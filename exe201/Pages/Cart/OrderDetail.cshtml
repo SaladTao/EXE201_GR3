@@ -102,11 +102,30 @@
         padding-top: 1rem;
         margin-top: 1rem;
     }
+
+    .vietnamese-font {
+        font-family: 'Quicksand', 'Noto Sans', 'Roboto', Arial, sans-serif;
+        font-weight: 400;
+        line-height: 1.6;
+        letter-spacing: 0.2px;
+        color: #333;
+    }
+
+        .vietnamese-font h2,
+        .vietnamese-font h3,
+        .vietnamese-font h4 {
+            font-weight: 700;
+        }
+
+        .vietnamese-font p {
+            margin-bottom: 1em;
+        }
+
 </style>
 
 <div class="container order-detail-container">
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2>Chi tiết đơn hàng #@Model.OrderId</h2>
+        <h2 class="vietnamese-font">Chi tiết đơn hàng #@Model.OrderId</h2>
         <a asp-page="/Cart/OrderHistory" class="btn btn-back">
             <i class="bi bi-arrow-left"></i> Quay lại
         </a>
@@ -118,7 +137,7 @@
             <div class="card order-detail-card mb-4">
                 <div class="order-header d-flex justify-content-between align-items-center">
                     <div>
-                        <h5 class="mb-0">Thông tin đơn hàng</h5>
+                        <h5 class="mb-0 vietnamese-font">Thông tin đơn hàng</h5>
                     </div>
                     <span class="order-status @GetStatusClass(Model.Order.Status)">@Model.Order.Status</span>
                 </div>
@@ -139,7 +158,7 @@
             <!-- Chi tiết sản phẩm -->
             <div class="card order-detail-card">
                 <div class="order-header">
-                    <h5 class="mb-0">Chi tiết sản phẩm</h5>
+                    <h4 class="mb-0 vietnamese-font">Chi tiết sản phẩm</h4>
                 </div>
                 <div class="order-body">
                     @foreach (var item in Model.OrderDetails)
@@ -147,11 +166,11 @@
                         <div class="product-item">
                             <div class="row align-items-center">
                                 <div class="col-auto">
-                                    <img src="@item.Product.ImageUrl" alt="@item..Name" class="product-image">
+                                    <img src="@Url.Content(item.Product.ImageUrl)" alt="@item..Name" class="product-image">
                                 </div>
                                 <div class="col">
-                                    <h6 class="mb-1">@item.Product.Name</h6>
-                                    <p class="text-muted mb-0">@Html.Raw(item.Product.Description.Replace("\r\n", "<br />").Replace("\n", "<br />"))</p>
+                                    <h5 class="mb-1 vietnamese-font">@item.Product.Name</h5>
+                                    
                                 </div>
                                 <div class="col-auto text-end">
                                     <p class="mb-0">@item.Quantity x @item.Price.ToString("N0") VNĐ</p>
