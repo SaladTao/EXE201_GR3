@@ -129,7 +129,7 @@
                 <div class="order-header d-flex justify-content-between align-items-center">
                     <div>
                         <span class="order-id">Đơn hàng #@order.Id</span>
-                        <span class="ms-3 order-date">@order.CreatedAt?.ToString("dd/MM/yyyy HH:mm")</span>
+                        <span class="ms-3 order-date">@order.CreatedAt.ToString("dd/MM/yyyy HH:mm")</span>
                     </div>
                     <span class="order-status @GetStatusClass(order.Status)">@order.Status</span>
                 </div>
