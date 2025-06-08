@@ -43,10 +43,10 @@ builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 
 
 var app = builder.Build();
-var connString = builder.Configuration.GetConnectionString("DbContext");
+var connString = builder.Configuration.GetConnectionString("PostgreSqlConnection");
 if (string.IsNullOrEmpty(connString))
 {
-    throw new Exception("Connection string 'DefaultConnection' is null or empty!");
+    throw new Exception("Connection string 'PostgreSqlConnection' is null or empty!");
 }
 Console.WriteLine($"Connection string: {connString}");
 
