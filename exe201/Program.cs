@@ -1,7 +1,14 @@
-﻿using exe201.Models;
+﻿using exe201.Data;
+using exe201.Models;
+using exe201.Repository;
+using exe201.Repository.Order;
+using exe201.Repository.OrderDetail;
+using exe201.Repository.Product;
+using exe201.Service;
+using exe201.Service.Admin;
+using exe201.Service.Product;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using exe201.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +35,14 @@ builder.Services.AddSession(options =>
 
 // Add HttpContextAccessor if needed
 builder.Services.AddHttpContextAccessor();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<OrderService>();
+builder.Services.AddScoped<IProductRepository, ProductRepository>();
+builder.Services.AddScoped<IOrderDetailRepository, OrderDetailRepository>();
+builder.Services.AddScoped<ProductService>();
+builder.Services.AddScoped<ICustomerService, CustomerService>();
+builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 var app = builder.Build();
 

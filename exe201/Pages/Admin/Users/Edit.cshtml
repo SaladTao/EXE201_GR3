@@ -1,0 +1,90 @@
+﻿@page
+@model exe201.Pages.Admin.Users.EditModel
+
+@{
+    ViewData["Title"] = "Edit User";
+    Layout = "~/Pages/Shared/_LayoutAdmin.cshtml";
+}
+
+<h1 class="mb-4 text-primary">Edit User</h1>
+<hr />
+
+<form method="post" class="shadow-sm p-4 rounded bg-light">
+    <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+    <input type="hidden" asp-for="User.Id" />
+
+    <div class="row">
+        <!-- Left Column: Account Info -->
+        <div class="col-md-6">
+            <h5 class="text-secondary mb-3">Account Information</h5>
+
+            <div class="form-group mb-3">
+                <label asp-for="User.Username" class="form-label fw-semibold"></label>
+                <input asp-for="User.Username" class="form-control" readonly/>
+                <span asp-validation-for="User.Username" class="text-danger small"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="User.Email" class="form-label fw-semibold"></label>
+                <input asp-for="User.Email" class="form-control" readonly />
+                <span asp-validation-for="User.Email" class="text-danger small"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="User.Role" class="form-label fw-semibold"></label>
+                <select asp-for="User.Role" class="form-select" asp-items="Model.RoleOptions"></select>
+                <span asp-validation-for="User.Role" class="text-danger small"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="User.CreatedAt" class="form-label fw-semibold"></label>
+                <input asp-for="User.CreatedAt" class="form-control" type="datetime-local" readonly />
+                <span asp-validation-for="User.CreatedAt" class="text-danger small"></span>
+            </div>
+        </div>
+
+        <!-- Right Column: Profile Info -->
+        <div class="col-md-6">
+            <h5 class="text-secondary mb-3">Profile Information</h5>
+
+            <div class="form-group mb-3">
+                <label asp-for="User.Profile.FullName" class="form-label fw-semibold"></label>
+                <input asp-for="User.Profile.FullName" class="form-control" readonly />
+                <span asp-validation-for="User.Profile.FullName" class="text-danger small"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="User.Profile.Phone" class="form-label fw-semibold"></label>
+                <input asp-for="User.Profile.Phone" class="form-control" readonly />
+                <span asp-validation-for="User.Profile.Phone" class="text-danger small"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="User.Profile.Address" class="form-label fw-semibold"></label>
+                <input asp-for="User.Profile.Address" class="form-control" readonly />
+                <span asp-validation-for="User.Profile.Address" class="text-danger small"></span>
+            </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="User.Profile.AvatarUrl" class="form-label fw-semibold"></label>
+                <input asp-for="User.Profile.AvatarUrl" class="form-control" readonly />
+                <span asp-validation-for="User.Profile.AvatarUrl" class="text-danger small"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group mt-4">
+        <button type="submit" class="btn btn-primary">
+            <i class="bi bi-save"></i> Save Changes
+        </button>
+        <a asp-page="./Index" class="btn btn-secondary ms-2">
+            <i class="bi bi-arrow-left-circle"></i> Back to List
+        </a>
+    </div>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

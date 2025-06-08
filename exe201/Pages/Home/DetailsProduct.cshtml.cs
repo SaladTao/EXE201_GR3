@@ -32,12 +32,11 @@ namespace exe201.Pages.Home
 
             if (Product == null)
             {
-                return NotFound();
+                return NotFound(); // <- xử lý khi không tìm thấy sản phẩm
             }
 
             return Page();
         }
-
         public async Task<IActionResult> OnPostAddToCartAsync(int productId)
         {
             // Kiểm tra đăng nhập
@@ -85,5 +84,6 @@ namespace exe201.Pages.Home
             TempData["SuccessMessage"] = "Đã thêm sản phẩm vào giỏ hàng!";
             return RedirectToPage(new { productId = productId });
         }
+
     }
 }
