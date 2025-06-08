@@ -10,7 +10,7 @@ namespace exe201.Models
         public int Id { get; set; }
 
         public int UserId { get; set; }
-
+        [NotMapped]
         public DateTime OrderDate { get; set; } = DateTime.Now;
 
         [Column(TypeName = "decimal(18,2)")]

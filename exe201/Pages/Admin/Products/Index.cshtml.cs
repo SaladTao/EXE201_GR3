@@ -30,7 +30,7 @@ namespace exe201.Pages.Admin.Products
 
         public int CurrentPage { get; set; } = 1;
         public int TotalPages { get; set; }
-        public int PageSize { get; set; } = 2;
+        public int PageSize { get; set; } = 10;
 
         public async Task<IActionResult> OnGetAsync(int? pageNumber)
         {
