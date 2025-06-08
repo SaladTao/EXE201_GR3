@@ -10,13 +10,13 @@ namespace exe201.Models
         public int Id { get; set; }
 
         public int UserId { get; set; }
-
-   
+        [NotMapped]
+        public DateTime OrderDate { get; set; } = DateTime.Now;
 
         [Column(TypeName = "decimal(18,2)")]
-        public decimal  TotalAmount { get; set; }
+        public decimal TotalAmount { get; set; }
 
-        public DateTime? CreatedAt { get; set; } = DateTime.Now;
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
 
         [Required]
 
