@@ -139,6 +139,23 @@
         border: 1px solid #ccc;
     }
 
+    .vietnamese-font {
+        font-family: 'Quicksand', 'Noto Sans', 'Roboto', Arial, sans-serif;
+        font-weight: 400;
+        line-height: 1.6;
+        letter-spacing: 0.2px;
+       
+    }
+
+        .vietnamese-font h2,
+        .vietnamese-font h3,
+        .vietnamese-font h4 {
+            font-weight: 700;
+        }
+
+        .vietnamese-font p {
+            margin-bottom: 1em;
+        }
 </style>
 
 
@@ -152,7 +169,7 @@
 
         <!-- Thông tin sản phẩm -->
         <div class="col-md-6 mt-4 mt-md-0">
-            <h1 class="product-title">@Model.Product.Name</h1>
+            <h1 class="product-title vietnamese-font">@Model.Product.Name</h1>
             <p class="price">Giá: @Model.Product.Price.ToString("N0") VNĐ</p>
             <p class="category">Thể loại: <span class="fw-normal">@Model.Product.Category?.Name</span></p>
 
