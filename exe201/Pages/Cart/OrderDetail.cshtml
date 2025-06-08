@@ -1,0 +1,206 @@
+﻿@page
+@model exe201.Pages.Cart.OrderDetailModel
+@{
+    ViewData["Title"] = "Chi tiết đơn hàng #" + Model.OrderId;
+}
+
+<style>
+    .order-detail-container {
+        padding: 2rem 0;
+    }
+
+    .order-detail-card {
+        border: none;
+        box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        border-radius: 10px;
+        margin-bottom: 1.5rem;
+    }
+
+    .order-header {
+        background-color: #f8f9fa;
+        border-radius: 10px 10px 0 0;
+        padding: 1.25rem;
+        border-bottom: 1px solid #eee;
+    }
+
+    .order-body {
+        padding: 1.5rem;
+    }
+
+    .order-status {
+        padding: 0.35rem 0.75rem;
+        border-radius: 50px;
+        font-size: 0.85rem;
+        font-weight: 500;
+    }
+
+    .status-pending {
+        background-color: #fff3cd;
+        color: #856404;
+    }
+
+    .status-completed {
+        background-color: #d4edda;
+        color: #155724;
+    }
+
+    .status-shipping {
+        background-color: #cce5ff;
+        color: #004085;
+    }
+
+    .status-cancelled {
+        background-color: #f8d7da;
+        color: #721c24;
+    }
+
+    .product-item {
+        border-bottom: 1px solid #eee;
+        padding: 1rem 0;
+    }
+
+    .product-item:last-child {
+        border-bottom: none;
+    }
+
+    .product-image {
+        max-width: 80px;
+        border-radius: 5px;
+    }
+
+    .btn-back {
+        background-color: #6c757d;
+        color: white;
+        padding: 0.5rem 1.5rem;
+        border: none;
+        border-radius: 5px;
+        font-weight: 500;
+        transition: all 0.3s ease;
+    }
+
+    .btn-back:hover {
+        background-color: #5a6268;
+        color: white;
+    }
+
+    .info-section {
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        padding: 1.25rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .info-title {
+        font-weight: 600;
+        color: #555;
+        margin-bottom: 1rem;
+        font-size: 1.1rem;
+    }
+
+    .total-section {
+        border-top: 2px solid #eee;
+        padding-top: 1rem;
+        margin-top: 1rem;
+    }
+</style>
+
+<div class="container order-detail-container">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Chi tiết đơn hàng #@Model.OrderId</h2>
+        <a asp-page="/Cart/OrderHistory" class="btn btn-back">
+            <i class="bi bi-arrow-left"></i> Quay lại
+        </a>
+    </div>
+
+    <div class="row">
+        <div class="col-md-8">
+            <!-- Thông tin đơn hàng -->
+            <div class="card order-detail-card mb-4">
+                <div class="order-header d-flex justify-content-between align-items-center">
+                    <div>
+                        <h5 class="mb-0">Thông tin đơn hàng</h5>
+                    </div>
+                    <span class="order-status @GetStatusClass(Model.Order.Status)">@Model.Order.Status</span>
+                </div>
+                <div class="order-body">
+                    <div class="row mb-3">
+                        <div class="col-md-6">
+                            <p><strong>Mã đơn hàng:</strong> #@Model.Order.Id</p>
+                            <p><strong>Ngày đặt:</strong> @Model.Order.CreatedAt?.ToString("dd/MM/yyyy HH:mm")</p>
+                        </div>
+                        <div class="col-md-6">
+                            <p><strong>Trạng thái:</strong> @Model.Order.Status</p>
+                            <p><strong>Tổng tiền:</strong> @Model.Order.TotalAmount.ToString("N0") VNĐ</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Chi tiết sản phẩm -->
+            <div class="card order-detail-card">
+                <div class="order-header">
+                    <h5 class="mb-0">Chi tiết sản phẩm</h5>
+                </div>
+                <div class="order-body">
+                    @foreach (var item in Model.OrderDetails)
+                    {
+                        <div class="product-item">
+                            <div class="row align-items-center">
+                                <div class="col-auto">
+                                    <img src="@item.Product.ImageUrl" alt="@item.Product.Name" class="product-image">
+                                </div>
+                                <div class="col">
+                                    <h6 class="mb-1">@item.Product.Name</h6>
+                                    <p class="text-muted mb-0">@item.Product.Description</p>
+                                </div>
+                                <div class="col-auto text-end">
+                                    <p class="mb-0">@item.Quantity x @item.Price.ToString("N0") VNĐ</p>
+                                    <p class="mb-0 fw-bold">@((item.Quantity * item.Price).ToString("N0")) VNĐ</p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+
+                    <div class="total-section">
+                        <div class="d-flex justify-content-between">
+                            <h5>Tổng cộng:</h5>
+                            <h5>@Model.Order.TotalAmount.ToString("N0") VNĐ</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <!-- Thông tin người dùng -->
+            <div class="info-section">
+                <h5 class="info-title">Thông tin khách hàng</h5>
+                @if (Model.User?.Profile != null)
+                {
+                    <p><strong>Tên:</strong> @Model.User.Profile.FullName</p>
+                    <p><strong>Email:</strong> @Model.User.Email</p>
+                    <p><strong>Số điện thoại:</strong> @Model.User.Profile.Phone</p>
+                    <p><strong>Địa chỉ:</strong> @Model.User.Profile.Address</p>
+                }
+                else
+                {
+                    <p>Không có thông tin người dùng</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@functions {
+    public string GetStatusClass(string status)
+    {
+        return status switch
+        {
+            "Pending" => "status-pending",
+            "Completed" => "status-completed",
+            "Shipping" => "status-shipping",
+            "Cancelled" => "status-cancelled",
+            _ => ""
+        };
+    }
+}

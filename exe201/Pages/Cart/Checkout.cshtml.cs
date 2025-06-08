@@ -138,14 +138,9 @@ namespace exe201.Pages.Cart
             // Clear selected items from session
             HttpContext.Session.Remove("SelectedCartItems");
 
-            // Hiển thị thông báo thành công, không redirect
-            SuccessMessage = "Đặt hàng thành công! Cảm ơn bạn đã mua hàng.";
-
-            // Làm mới lại giỏ hàng để không hiển thị sản phẩm nữa
-            CartItems = new List<CartItem>();
-            Total = 0;
-
-            return Page();
+            // Chuyển hướng đến trang OrderHistory sau khi đặt hàng thành công
+            TempData["SuccessMessage"] = "Đặt hàng thành công! Cảm ơn bạn đã mua hàng.";
+            return RedirectToPage("/Cart/OrderHistory");
         }
     }
 }
