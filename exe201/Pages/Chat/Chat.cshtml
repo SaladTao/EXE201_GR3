@@ -1,0 +1,19 @@
+﻿@page
+@model exe201.Pages.Chat.ChatModel
+@{
+    ViewData["Title"] = "Chat with AI";
+}
+
+<h2>Chat with AI</h2>
+
+<form method="post">
+    <textarea name="UserMessage" rows="4" cols="50">@Model.UserMessage</textarea><br />
+    <button type="submit">Send</button>
+</form>
+
+@if (Model.AIResponse != null)
+{
+    <div>
+        <strong>AI:</strong> @Model.AIResponse
+    </div>
+}
