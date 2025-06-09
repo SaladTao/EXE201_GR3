@@ -12,20 +12,20 @@ using System.IO;
 using exe201.Service.AI;
 
 var builder = WebApplication.CreateBuilder(args);
- 
+
 builder.Services.AddRazorPages();
- 
+
 builder.Services.AddDbContext<EcommerceContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("PostgreSqlConnection")));
- 
+
 builder.Services.AddDistributedMemoryCache();
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromMinutes(30);  
-    options.Cookie.HttpOnly = true; 
-    options.Cookie.IsEssential = true; 
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
 });
- 
+
 var huggingFaceApiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
 
 if (string.IsNullOrEmpty(huggingFaceApiKey))
@@ -34,7 +34,7 @@ if (string.IsNullOrEmpty(huggingFaceApiKey))
 }
 
 Console.WriteLine($"OPENAI_API_KEY Key: {huggingFaceApiKey}");
- 
+
 builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
@@ -46,15 +46,22 @@ builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddHttpClient<GeminiService>();
 builder.Services.AddScoped<CohereService>();
- 
+
+// Cấu hình Data Protection với FileSystemXmlRepository và đảm bảo rằng thư mục keys có quyền truy cập đúng
 builder.Services.AddDataProtection()
-    .PersistKeysToFileSystem(new DirectoryInfo(Path.Combine(Directory.GetCurrentDirectory(), "keys")))  
-    .SetApplicationName("EcommerceApp")  
+    .PersistKeysToFileSystem(new DirectoryInfo(Path.Combine(Directory.GetCurrentDirectory(), "keys")))  // Lưu trữ khóa bảo vệ vào thư mục keys
+    .SetApplicationName("EcommerceApp")
     .AddKeyManagementOptions(options =>
     {
-       
+        // Đảm bảo rằng thư mục 'keys' có quyền truy cập đọc/ghi
+        var keysDirectory = new DirectoryInfo(Path.Combine(Directory.GetCurrentDirectory(), "keys"));
+        if (!keysDirectory.Exists)
+        {
+            keysDirectory.Create();  // Tạo thư mục nếu chưa tồn tại
+        }
     });
- 
+
+// Cấu hình HttpClient cho Cohere API
 builder.Services.AddHttpClient("Cohere", client =>
 {
     client.BaseAddress = new Uri("https://api.cohere.ai/v1/");
@@ -63,29 +70,29 @@ builder.Services.AddHttpClient("Cohere", client =>
 });
 
 var app = builder.Build();
- 
+
 var connString = builder.Configuration.GetConnectionString("PostgreSqlConnection");
 if (string.IsNullOrEmpty(connString))
 {
     throw new Exception("Connection string 'PostgreSqlConnection' is null or empty!");
 }
 Console.WriteLine($"Connection string: {connString}");
- 
+
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Error");
     app.UseHsts();
 }
- 
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseSession();  
+app.UseSession();  // Sử dụng session
 
 app.UseAuthorization();
- 
+
 app.UseEndpoints(endpoints =>
 {
     endpoints.MapRazorPages();
@@ -98,5 +105,5 @@ app.UseEndpoints(endpoints =>
 });
 
 app.MapRazorPages();
- 
+
 app.Run();
