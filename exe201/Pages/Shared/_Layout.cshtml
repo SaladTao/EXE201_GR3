@@ -227,19 +227,23 @@
 			@RenderBody()
 		</main>
 	</div>
+
 	<div class="chat-box-container">
 		<div class="chat-box-header" onclick="toggleChatBox()">
-			Chat with AI
+			Gemini AI
 		</div>
 		<div class="chat-box-content">
-			<form id="chatForm" method="post" asp-antiforgery="true">
-				<label for="userInput">Enter your question:</label>
-				<textarea name="userInput" id="userInput" rows="4" cols="50" placeholder="Ask something..."></textarea>
-				<button type="submit">Send</button>
+			<div class="chat-messages" id="chatMessages"></div>
+			<form id="chatForm" method="post" onsubmit="return false;">
+			 
+				@Html.AntiForgeryToken()
+				<label for="chatUserInput">Đặt câu hỏi:</label>
+				<textarea name="chatUserInput" id="chatUserInput" rows="4" cols="50" placeholder="..."></textarea>
+				<button type="submit">Gửi</button>
 			</form>
-			<div class="ai-response" id="aiResponse"></div>
 		</div>
 	</div>
+
 	<footer id="footer">
 	</footer>
 
@@ -271,7 +275,7 @@
 							</div>
 
 						</div>
-					</div><!-- grid -->
+					</div>
 				</div>
 			</div>
 		</div>
@@ -286,48 +290,69 @@
 			content.style.display = (content.style.display === 'none' || content.style.display === '') ? 'block' : 'none';
 		}
 
-		$(document).ready(function () {
+				$(document).ready(function () {
 			$('#chatForm').on('submit', function (e) {
 				e.preventDefault();
-				var userInput = $('#userInput').val().trim();
-				console.log("User Input:", userInput);
-				var token = $('input[name="__RequestVerificationToken"]').val();
-				console.log("CSRF Token:", token);
+				var userInput = $('#chatUserInput').val().trim();  
+				var token = $('#chatForm input[name="__RequestVerificationToken"]').val(); 
 
-				if (!userInput) {
-					$('#aiResponse').html('<p>Vui lòng nhập nội dung.</p>');
+				console.log("Submitting form...");
+				console.log("User Input:", userInput); 
+				 
+				if (!userInput || userInput.length === 0) {
+					appendMessage('system', 'Vui lòng nhập nội dung.');
 					return;
 				}
 
 				if (!token) {
-					$('#aiResponse').html('<p>Lỗi: Không tìm thấy token CSRF. Vui lòng tải lại trang.</p>');
+					appendMessage('system', 'Lỗi: Không tìm thấy token CSRF. Vui lòng tải lại trang.');
 					return;
 				}
 
-				$.ajax({
-					type: 'POST',
-					url: '/Chat',
-					contentType: 'application/json',
-					headers: {
-						'RequestVerificationToken': token
-					},
-					data: JSON.stringify({ userInput: userInput }),
-					success: function (response) {
-						console.log("Full Response:", response);
-						console.log("AI Response:", response?.aiResponse);
-						var aiResponse = response?.aiResponse || 'Không nhận được phản hồi từ AI.';
-						aiResponse = aiResponse.replace(/&/g, '&').replace(/</g, '<').replace(/>/g, '>').replace(/\n/g, '<br>');
-						$('#aiResponse').html('<strong>Phản hồi AI:</strong><p>' + aiResponse + '</p>');
-						$('#userInput').val('');
-					},
-					error: function (jqXHR, textStatus, errorThrown) {
-						console.log("AJAX Error:", textStatus, errorThrown);
-						console.log("Response Text:", jqXHR.responseText);
-						$('#aiResponse').html('<p>Lỗi khi xử lý yêu cầu. Vui lòng thử lại.</p>');
-					}
-				});
-			});
+				appendMessage('user', userInput);   
+				 
+				console.log("User input after appendMessage:", userInput);
+
+				console.log("Sending AJAX request to /Chat...");
+
+		$.ajax({
+			type: 'post',
+			url: '/Chat',
+			contentType: 'application/json',
+			headers: {
+				'RequestVerificationToken': token,
+				'X-Requested-With': 'XMLHttpRequest'  
+			},
+			data: JSON.stringify({ userInput: userInput }),  
+			dataType: 'json',
+			beforeSend: function (xhr) {
+				console.log("AJAX request initiated.");
+				console.log("Sending Data:", JSON.stringify({ userInput: userInput }));   
+			},
+			success: function (response) {
+				console.log("Full Response:", response);
+				var aiResponse = response?.aiResponse || 'Không nhận được phản hồi từ AI.';
+				appendMessage('ai', aiResponse);
+				$('#chatUserInput').val('');  
+			},
+			error: function (jqXHR, textStatus, errorThrown) {
+				console.error("AJAX Error:", jqXHR, textStatus, errorThrown);
+				appendMessage('system', 'Lỗi khi xử lý yêu cầu.');
+			}
 		});
+
+			});
+			 
+			function appendMessage(sender, message) {
+				var chatMessages = $('#chatMessages');
+				var messageClass = sender === 'user' ? 'user-message' : sender === 'ai' ? 'ai-message' : 'system-message';
+				var messageHtml = `<div class="${messageClass}"><strong>${sender === 'user' ? 'You' : sender === 'ai' ? 'AI' : 'System'}:</strong> ${message}</div>`;
+				chatMessages.append(messageHtml);
+				chatMessages.scrollTop(chatMessages[0].scrollHeight);  // Scroll to bottom
+			}
+		});
+
+
 	</script>
 
 

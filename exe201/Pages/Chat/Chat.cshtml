@@ -1,22 +1,48 @@
-﻿@page "/Chat"
+﻿@page "/Chat" 
 @model exe201.Pages.Chat.ChatModel
+@* @{ *@
+@*     ViewData["Title"] = "Chat"; *@
+@* } *@
+@* <h2>Chat with AI</h2> *@
+
+@* <form method="post"> *@
+@*     <label for="userInput">Enter your question:</label><br> *@
+@*     <textarea name="userInput" id="userInput" rows="4" cols="50"></textarea><br /> *@
+@*     <button type="submit">Send</button> *@
+@* </form> *@
+
+@* @if (!string.IsNullOrEmpty(Model.ErrorMessage)) *@
+@* { *@
+@*     <div class="alert alert-danger"> *@
+@*         @Model.ErrorMessage *@
+@*     </div> *@
+@* } *@
+
+@* @if (!string.IsNullOrEmpty(Model.AIResponse)) *@
+@* { *@
+@*     <div> *@
+@*         <strong>AI Response:</strong> *@
+@*         <p>@Model.AIResponse</p> *@
+@*     </div> *@
+@* } *@
+
+
+
+
 @{
-    ViewData["Title"] = "Chat";
+    ViewData["Title"] = "Chat with Gemini AI";
 }
-<h2>Chat with AI</h2>
+
+<h2>@ViewData["Title"]</h2>
+
 
 <form method="post">
-    <label for="userInput">Enter your question:</label><br>
-    <textarea name="userInput" id="userInput" rows="4" cols="50"></textarea><br />
+    <div>
+        <label for="mainUserInput">Enter your question:</label>
+        <textarea asp-for="UserInput" id="mainUserInput" rows="4" cols="50" placeholder="Ask Gemini AI..."></textarea>
+    </div>
     <button type="submit">Send</button>
 </form>
-
-@if (!string.IsNullOrEmpty(Model.ErrorMessage))
-{
-    <div class="alert alert-danger">
-        @Model.ErrorMessage
-    </div>
-}
 
 @if (!string.IsNullOrEmpty(Model.AIResponse))
 {

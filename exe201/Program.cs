@@ -34,7 +34,7 @@ if (string.IsNullOrEmpty(huggingFaceApiKey))
     throw new Exception("OPENAI_API_KEY is missing! Please set the API key in your environment variables.");
 }
 
-Console.WriteLine($"Hugging Face API Key: {huggingFaceApiKey}");
+Console.WriteLine($"OPENAI_API_KEY Key: {huggingFaceApiKey}");
 
 builder.Services.AddHttpContextAccessor();
 
@@ -45,7 +45,7 @@ builder.Services.AddScoped<IOrderDetailRepository, OrderDetailRepository>();
 builder.Services.AddScoped<ProductService>();
 builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
-
+builder.Services.AddHttpClient<GeminiService>();
 builder.Services.AddScoped<CohereService>();
 
 //builder.Services.AddHttpClient("Cohere", client =>
