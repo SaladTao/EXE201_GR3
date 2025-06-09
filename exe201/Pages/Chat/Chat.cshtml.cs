@@ -1,54 +1,74 @@
+﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+using System.Threading.Tasks;
+using exe201.Service.AI;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Text.Json;
-using System.Text;
+using System;
 
 namespace exe201.Pages.Chat
 {
     public class ChatModel : PageModel
     {
+        private readonly CohereService _cohereService;
+
+        public ChatModel(CohereService cohereService)
+        {
+            _cohereService = cohereService;
+        }
+
         [BindProperty]
-        public string UserMessage { get; set; }
+        public string UserInput { get; set; }
 
         public string AIResponse { get; set; }
 
-        public async Task<IActionResult> OnPostAsync()
+        public string ErrorMessage { get; set; }
+
+        public class ChatInput
         {
-            if (!string.IsNullOrWhiteSpace(UserMessage))
-            {
-                AIResponse = await GetAIResponse(UserMessage);
-            }
-            return Page();
+            public string UserInput { get; set; }
         }
 
-        private async Task<string> GetAIResponse(string message)
-        {
-            var apiKey = Environment.GetEnvironmentVariable("OPENAI_API_KEY");
-
-            using var client = new HttpClient();
-            client.DefaultRequestHeaders.Add("Authorization", $"Bearer {apiKey}");
-
-            var requestBody = new
+        public async Task<IActionResult> OnPostAsync([FromBody] ChatInput input)
+        { 
+            if (input != null && !string.IsNullOrEmpty(input.UserInput))
             {
-                model = "gpt-3.5-turbo",
-                messages = new[] {
-                new { role = "user", content = message }
+                try
+                {
+                    var aiResponse = await _cohereService.GetCohereResponseAsync(input.UserInput);
+                    if (string.IsNullOrEmpty(aiResponse))
+                    {
+                        return new JsonResult(new { AIResponse = "Không nhận được phản hồi từ AI." });
+                    }
+
+                    return new JsonResult(new { AIResponse = aiResponse });
+                }
+                catch (Exception ex)
+                {
+                    return new JsonResult(new { AIResponse = $"Lỗi: {ex.Message}" });
+                }
             }
-            };
+             
+            if (!string.IsNullOrEmpty(UserInput))
+            {
+                try
+                {
+                    AIResponse = await _cohereService.GetCohereResponseAsync(UserInput);
+                    if (string.IsNullOrEmpty(AIResponse))
+                    {
+                        ErrorMessage = "Không nhận được phản hồi từ AI.";
+                    }
+                }
+                catch (Exception ex)
+                {
+                    ErrorMessage = "Có lỗi khi lấy phản hồi từ AI: " + ex.Message;
+                }
+            }
 
-            var content = new StringContent(JsonSerializer.Serialize(requestBody), Encoding.UTF8, "application/json");
+            if (!string.IsNullOrEmpty(AIResponse))
+            {
+                return Page();
+            }
 
-            var response = await client.PostAsync("https://api.openai.com/v1/chat/completions", content);
-            var responseString = await response.Content.ReadAsStringAsync();
-
-            using JsonDocument doc = JsonDocument.Parse(responseString);
-            var aiMessage = doc.RootElement
-                .GetProperty("choices")[0]
-                .GetProperty("message")
-                .GetProperty("content")
-                .GetString();
-
-            return aiMessage;
+            return Page();
         }
     }
 }

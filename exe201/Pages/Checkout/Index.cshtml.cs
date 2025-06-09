@@ -36,7 +36,7 @@ namespace exe201.Pages.Checkout
             var order = new Order
             {
                 UserId = userId,
-                OrderDate = DateTime.Now,
+                OrderDate = DateTime.UtcNow,
                 OrderDetails = cart.CartItems.Select(ci => new OrderDetail
                 {
                     ProductId = ci.ProductId,

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using exe201.Models;
-using System.ComponentModel.DataAnnotations;  // namespace chứa Product model
+using System.ComponentModel.DataAnnotations;  
 
 namespace exe201.Pages.Home
 {

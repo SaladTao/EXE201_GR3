@@ -112,7 +112,7 @@ namespace exe201.Pages.Cart
                 UserId = userId,
                 TotalAmount = cartItems.Sum(item => item.Product.Price * item.Quantity),
                 Status = OrderStatus.Pending.ToString(),
-                CreatedAt = DateTime.Now
+                CreatedAt = DateTime.UtcNow
             };
 
             _context.Orders.Add(order);

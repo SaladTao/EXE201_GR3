@@ -144,6 +144,12 @@
 
             <button type="submit" class="btn-login">ĐĂNG KÝ →</button>
         </form>
+        @if (!string.IsNullOrEmpty(Model.ErrorMessage))
+        {
+            <div class="alert alert-danger">
+                @Model.ErrorMessage
+            </div>
+        }
 
         <p class="register-link">Đã có tài khoản? <a href="/Login">Đăng nhập</a></p>
     </div>

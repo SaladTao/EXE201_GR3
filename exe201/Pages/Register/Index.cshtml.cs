@@ -83,7 +83,10 @@ namespace exe201.Pages.Register
 
             [Required(ErrorMessage = "Vui lòng nhập số điện thoại.")]
             [Phone(ErrorMessage = "Số điện thoại không hợp lệ.")]
+            [StringLength(100, MinimumLength = 8, ErrorMessage = "Số điện thoại phải có ít nhất 8 chữ số.")]
+            [RegularExpression(@"^0\d{7,}$", ErrorMessage = "Số điện thoại phải bắt đầu bằng số 0 và có ít nhất 8 chữ số.")]
             public string PhoneNumber { get; set; }
+
 
             [Required(ErrorMessage = "Vui lòng nhập Tỉnh/Thành phố.")]
             public string Province { get; set; }

@@ -132,7 +132,7 @@
 								
 									<div class="item-price">@Model.product.Price.ToString("N0") VNĐ</div>
 									<div class="btn-wrap">
-										<a href="/Home/DetailsProduct?productId=@Model.product.Id" class="btn-accent-arrow">
+										<a href="/Detail/DetailsProduct?productId=@Model.product.Id" class="btn-accent-arrow">
 											Mua Ngay<i class="icon icon-ns-arrow-right"></i>
 										</a>
 									</div>
@@ -175,14 +175,14 @@
 									<div class="col-md-3">
 										<div class="product-item">
 											<figure class="product-style">
-												<a href="/Home/DetailsProduct?productId=@item.Id">
+												<a href="/Detail/DetailsProduct?productId=@item.Id">
 													<img src="@Url.Content(item.ImageUrl)" alt="@item.Name" class="product-item" />
 												</a>
 												<button type="button" class="add-to-cart" data-product-tile="add-to-cart">Xem Chi Tiết</button>
 											</figure>
 											<figcaption>
 												<h3>
-													<a href="/Home/DetailsProduct?productId=@item.Id" class="vietnamese-font">@item.Name</a>
+													<a href="/Detail/DetailsProduct?productId=@item.Id" class="vietnamese-font">@item.Name</a>
 												</h3>
 												<span>@item.Price.ToString("N0") VNĐ</span>
 
