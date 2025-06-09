@@ -56,7 +56,7 @@ namespace exe201.Pages.Home
 
             if (cart == null)
             {
-                cart = new exe201.Models.Cart { UserId = userId.Value, CreatedAt = DateTime.Now };
+                cart = new exe201.Models.Cart { UserId = userId.Value, CreatedAt = DateTime.UtcNow };
                 _context.Carts.Add(cart);
                 await _context.SaveChangesAsync();
             }
