@@ -10,9 +10,9 @@
 
 <div class="card shadow-sm border-0 mb-4">
     <div class="card-body">
-        <h5 class="card-title text-secondary">Account Information</h5>
+        <h5 class="card-title text-secondary">Thông tin tài khoản</h5>
         <div class="row mb-3">
-            <div class="col-sm-3 fw-semibold">Username</div>
+            <div class="col-sm-3 fw-semibold">Tên tài khoản</div>
             <div class="col-sm-9">@Model.User.Username</div>
         </div>
         <div class="row mb-3">
@@ -24,34 +24,34 @@
             <div class="col-sm-9">@Model.User.Role</div>
         </div>
         <div class="row mb-3">
-            <div class="col-sm-3 fw-semibold">Created At</div>
+            <div class="col-sm-3 fw-semibold">Ngày tạo</div>
             <div class="col-sm-9">@Model.User.CreatedAt.ToString("dd/MM/yyyy HH:mm")</div>
         </div>
 
         <hr />
 
-        <h5 class="card-title text-secondary">Profile Information</h5>
+        <h5 class="card-title text-secondary">Thông tin người dùng</h5>
         <div class="row mb-3">
-            <div class="col-sm-3 fw-semibold">Full Name</div>
+            <div class="col-sm-3 fw-semibold">Họ và tên</div>
             <div class="col-sm-9">@Model.User.Profile?.FullName</div>
         </div>
+        @* <div class="row mb-3"> *@
+        @*     <div class="col-sm-3 fw-semibold">Avatar</div> *@
+        @*     @if (!string.IsNullOrEmpty(Model.User.Profile?.AvatarUrl)) *@
+        @*     { *@
+        @*         <img src="@Model.User.Profile?.AvatarUrl" alt="Product Image" style="height: 200px;width:200px;" /> *@
+        @*     } *@
+        @*     else *@
+        @*     { *@
+        @*         <span class="text-muted">No image available</span> *@
+        @*     } *@
+        @* </div> *@
         <div class="row mb-3">
-            <div class="col-sm-3 fw-semibold">Avatar</div>
-            @if (!string.IsNullOrEmpty(Model.User.Profile?.AvatarUrl))
-            {
-                <img src="@Model.User.Profile?.AvatarUrl" alt="Product Image" style="height: 200px;width:200px;" />
-            }
-            else
-            {
-                <span class="text-muted">No image available</span>
-            }
-        </div>
-        <div class="row mb-3">
-            <div class="col-sm-3 fw-semibold">Phone</div>
+            <div class="col-sm-3 fw-semibold">Số điện thoại</div>
             <div class="col-sm-9">@Model.User.Profile?.Phone</div>
         </div>
         <div class="row mb-3">
-            <div class="col-sm-3 fw-semibold">Address</div>
+            <div class="col-sm-3 fw-semibold">Địa chỉ</div>
             <div class="col-sm-9">@Model.User.Profile?.Address</div>
         </div>
     </div>
@@ -59,9 +59,9 @@
 
 <div>
     <a asp-page="./Edit" asp-route-id="@Model.User.Id" class="btn btn-primary">
-        <i class="bi bi-pencil-square"></i> Edit
+        <i class="bi bi-pencil-square"></i> Chỉnh sửa
     </a>
     <a asp-page="./Index" class="btn btn-secondary ms-2">
-        <i class="bi bi-arrow-left-circle"></i> Back to List
+        <i class="bi bi-arrow-left-circle"></i> Quay lại danh sách
     </a>
 </div>
