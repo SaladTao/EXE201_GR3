@@ -6,36 +6,43 @@
     Layout = "~/Pages/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1 class="display-4 mb-4 text-primary">Product Details</h1>
+<h1 class="display-4 mb-4 text-primary">Chi tiết sản phẩm</h1>
 
 <div class="card shadow-sm mb-4">
     <div class="card-body">
-        <h4 class="card-title">Product Information</h4>
+        <h4 class="card-title">Thông tin sản phẩm</h4>
         <hr />
         <dl class="row">
             <dt class="col-sm-3 fw-bold">
-                @Html.DisplayNameFor(model => model.Product.Name)
+                Tên sản phẩm
             </dt>
             <dd class="col-sm-9">
                 @Html.DisplayFor(model => model.Product.Name)
             </dd>
 
             <dt class="col-sm-3 fw-bold">
-                @Html.DisplayNameFor(model => model.Product.Description)
+                Thể loại
+            </dt>
+            <dd class="col-sm-9">
+                @Html.DisplayFor(model => model.Product.Category.Name)
+            </dd>
+
+            <dt class="col-sm-3 fw-bold">
+                Mô tả
             </dt>
             <dd class="col-sm-9">
                 @Html.Raw(Model.Product.Description?.Replace("\r\n", "<br />").Replace("\n", "<br />"))
             </dd>
 
             <dt class="col-sm-3 fw-bold">
-                @Html.DisplayNameFor(model => model.Product.Price)
+                Giá
             </dt>
             <dd class="col-sm-9 text-success">
-                $@Html.DisplayFor(model => model.Product.Price)
+                @Html.DisplayFor(model => model.Product.Price)
             </dd>
 
             <dt class="col-sm-3 fw-bold">
-                @Html.DisplayNameFor(model => model.Product.ImageUrl)
+                Ảnh
             </dt>
             <dd class="col-sm-9">
                 @if (!string.IsNullOrEmpty(Model.Product.ImageUrl))
@@ -70,23 +77,18 @@
             </dd>
 
             <dt class="col-sm-3 fw-bold">
-                @Html.DisplayNameFor(model => model.Product.CreatedAt)
+                Ngày tạo
             </dt>
             <dd class="col-sm-9">
                 @Html.DisplayFor(model => model.Product.CreatedAt)
             </dd>
 
-            <dt class="col-sm-3 fw-bold">
-                @Html.DisplayNameFor(model => model.Product.Category)
-            </dt>
-            <dd class="col-sm-9">
-                @Html.DisplayFor(model => model.Product.Category.Name)
-            </dd>
+            
         </dl>
     </div>
 </div>
 
 <div class="mb-4">
-    <a asp-page="./Edit" asp-route-id="@Model.Product.Id" class="btn btn-warning me-2">Edit</a>
-    <a asp-page="./Index" class="btn btn-secondary">Back to List</a>
+    <a asp-page="./Edit" asp-route-id="@Model.Product.Id" class="btn btn-warning me-2">Chỉnh sửa</a>
+    <a asp-page="./Index" class="btn btn-secondary">Quay lại danh sách</a>
 </div>

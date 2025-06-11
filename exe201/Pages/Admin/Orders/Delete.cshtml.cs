@@ -33,7 +33,7 @@ namespace exe201.Pages.Admin.Orders
                 return NotFound();
             }
 
-            var order = await _context.Orders.FirstOrDefaultAsync(m => m.Id == id);
+            var order = await _context.Orders.Include(o=>o.User).FirstOrDefaultAsync(m => m.Id == id);
 
             if (order == null)
             {
