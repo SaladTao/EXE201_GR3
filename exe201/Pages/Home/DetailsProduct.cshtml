@@ -175,31 +175,36 @@
             <p class="category">Thể loại: <span class="fw-normal">@Model.Product.Category?.Name</span></p>
 
 
-        
-
+        <form method="post" asp-page-handler="AddToCart" id="addToCartForm">
+                <label for="sizeSelect">Chọn kích thước:</label>
+                <select id="sizeSelect" name="size" class="form-select w-50 mb-3" required>
+                    <option value="">-- Chọn kích thước --</option>
+                    <option value="Nhỏ">Nhỏ</option>
+                    <option value="Trung bình">Trung bình</option>
+                    <option value="Lớn">Lớn</option>
+                </select>
             <!-- Nút mua hàng -->
             @if (userId != null)
             {
-                <form method="post" asp-page-handler="AddToCart" id="addToCartForm">
+                
                     <input type="hidden" name="productId" value="@Model.Product.Id" />
-
-                    <label for="sizeSelect">Chọn kích thước:</label>
-                    <select id="sizeSelect" name="size" class="form-select w-50 mb-3" required>
-                        <option value="">-- Chọn kích thước --</option>
-                        <option value="Nhỏ">Nhỏ</option>
-                        <option value="Trung bình">Trung bình</option>
-                        <option value="Lớn">Lớn</option>
-                    </select>
 
                     <div id="errorSize" class="error-message" style="display:none;">Vui lòng chọn kích thước trước khi thêm vào giỏ.</div>
 
-                 
+
 
                     <button type="submit" class="btn-add-cart">
                         THÊM VÀO GIỎ HÀNG <i class="bi bi-cart-plus ms-2"></i>
                     </button>
-                </form>
-            }
+
+                }
+                else
+                {
+                    <a href="/Login" class="btn btn-success btn-login mt-3">
+                        ĐĂNG NHẬP ĐỂ MUA HÀNG <i class="bi bi-box-arrow-in-right ms-2"></i>
+                    </a>
+                }
+            </form>
             <div id="errorSize" class="error-message" style="display:none;">Vui lòng chọn kích thước trước khi thêm vào giỏ.</div>
 
         </div>
