@@ -6,7 +6,7 @@
     Layout = "~/Pages/Shared/_LayoutAdmin.cshtml";
 }
 
-<h1 class="mb-4 text-primary">Edit User</h1>
+<h1 class="mb-4 text-primary">Chỉnh sửa người dùng</h1>
 <hr />
 
 <form method="post" class="shadow-sm p-4 rounded bg-light">
@@ -16,10 +16,10 @@
     <div class="row">
         <!-- Left Column: Account Info -->
         <div class="col-md-6">
-            <h5 class="text-secondary mb-3">Account Information</h5>
+            <h5 class="text-secondary mb-3">Thông tin tài khoản</h5>
 
             <div class="form-group mb-3">
-                <label asp-for="User.Username" class="form-label fw-semibold"></label>
+                <label asp-for="User.Username" class="form-label fw-semibold">Tên tài khoản</label>
                 <input asp-for="User.Username" class="form-control" readonly/>
                 <span asp-validation-for="User.Username" class="text-danger small"></span>
             </div>
@@ -30,14 +30,31 @@
                 <span asp-validation-for="User.Email" class="text-danger small"></span>
             </div>
 
+            @* <div class="form-group mb-3"> *@
+            @*     <label asp-for="User.Role" class="form-label fw-semibold"></label> *@
+            @*     <select asp-for="User.Role" class="form-select" asp-items="Model.RoleOptions"></select> *@
+            @*     <span asp-validation-for="User.Role" class="text-danger small"></span> *@
+            @* </div> *@
             <div class="form-group mb-3">
                 <label asp-for="User.Role" class="form-label fw-semibold"></label>
-                <select asp-for="User.Role" class="form-select" asp-items="Model.RoleOptions"></select>
+                @if (Model.User.Role == "Admin")
+                {
+                    <!-- Hiển thị Role nhưng không cho sửa -->
+                    <input class="form-control" value="Admin" disabled />
+                    <input type="hidden" asp-for="User.Role" /> <!-- để giữ lại giá trị khi submit -->
+                }
+                else
+                {
+                    <!-- Cho phép chọn nếu không phải admin -->
+                    <select asp-for="User.Role" class="form-select" asp-items="Model.RoleOptions"></select>
+                }
                 <span asp-validation-for="User.Role" class="text-danger small"></span>
             </div>
 
+
+
             <div class="form-group mb-3">
-                <label asp-for="User.CreatedAt" class="form-label fw-semibold"></label>
+                <label asp-for="User.CreatedAt" class="form-label fw-semibold">Ngày tạo</label>
                 <input asp-for="User.CreatedAt" class="form-control" type="datetime-local" readonly />
                 <span asp-validation-for="User.CreatedAt" class="text-danger small"></span>
             </div>
@@ -45,40 +62,40 @@
 
         <!-- Right Column: Profile Info -->
         <div class="col-md-6">
-            <h5 class="text-secondary mb-3">Profile Information</h5>
+            <h5 class="text-secondary mb-3">Thông tin người dùng</h5>
 
             <div class="form-group mb-3">
-                <label asp-for="User.Profile.FullName" class="form-label fw-semibold"></label>
+                <label asp-for="User.Profile.FullName" class="form-label fw-semibold">Họ và tên</label>
                 <input asp-for="User.Profile.FullName" class="form-control" readonly />
                 <span asp-validation-for="User.Profile.FullName" class="text-danger small"></span>
             </div>
 
             <div class="form-group mb-3">
-                <label asp-for="User.Profile.Phone" class="form-label fw-semibold"></label>
+                <label asp-for="User.Profile.Phone" class="form-label fw-semibold">Số điện thoại</label>
                 <input asp-for="User.Profile.Phone" class="form-control" readonly />
                 <span asp-validation-for="User.Profile.Phone" class="text-danger small"></span>
             </div>
 
             <div class="form-group mb-3">
-                <label asp-for="User.Profile.Address" class="form-label fw-semibold"></label>
+                <label asp-for="User.Profile.Address" class="form-label fw-semibold">Địa chỉ</label>
                 <input asp-for="User.Profile.Address" class="form-control" readonly />
                 <span asp-validation-for="User.Profile.Address" class="text-danger small"></span>
             </div>
 
-            <div class="form-group mb-3">
-                <label asp-for="User.Profile.AvatarUrl" class="form-label fw-semibold"></label>
-                <input asp-for="User.Profile.AvatarUrl" class="form-control" readonly />
-                <span asp-validation-for="User.Profile.AvatarUrl" class="text-danger small"></span>
-            </div>
+            @* <div class="form-group mb-3"> *@
+            @*     <label asp-for="User.Profile.AvatarUrl" class="form-label fw-semibold"></label> *@
+            @*     <input asp-for="User.Profile.AvatarUrl" class="form-control" readonly /> *@
+            @*     <span asp-validation-for="User.Profile.AvatarUrl" class="text-danger small"></span> *@
+            @* </div> *@
         </div>
     </div>
 
     <div class="form-group mt-4">
         <button type="submit" class="btn btn-primary">
-            <i class="bi bi-save"></i> Save Changes
+            <i class="bi bi-save"></i> Lưu thay đổi
         </button>
         <a asp-page="./Index" class="btn btn-secondary ms-2">
-            <i class="bi bi-arrow-left-circle"></i> Back to List
+            <i class="bi bi-arrow-left-circle"></i> Quay lại danh sách
         </a>
     </div>
 </form>

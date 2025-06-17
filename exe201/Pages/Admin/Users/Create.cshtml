@@ -16,7 +16,7 @@
         <!-- Cột trái: Thông tin tài khoản -->
         <div class="col-md-6">
             <div class="mb-3">
-                <label asp-for="User.Username" class="form-label fw-semibold">Username <span class="text-danger">*</span></label>
+                <label asp-for="User.Username" class="form-label fw-semibold">Tên tài khoản <span class="text-danger">*</span></label>
                 <input asp-for="User.Username" class="form-control" />
                 <span asp-validation-for="User.Username" class="text-danger"></span>
             </div>
@@ -28,7 +28,7 @@
             </div>
 
             <div class="mb-3">
-                <label asp-for="User.Password" class="form-label fw-semibold">Password <span class="text-danger">*</span></label>
+                <label asp-for="User.Password" class="form-label fw-semibold">Mật khẩu <span class="text-danger">*</span></label>
                 <input asp-for="User.Password" class="form-control" type="password" />
                 <span asp-validation-for="User.Password" class="text-danger"></span>
             </div>
@@ -40,7 +40,7 @@
             </div>
 
             <div class="mb-3">
-                <label asp-for="User.CreatedAt" class="form-label fw-semibold">Created At</label>
+                <label asp-for="User.CreatedAt" class="form-label fw-semibold">Ngày tạo</label>
                 <input asp-for="User.CreatedAt" class="form-control" type="datetime-local" />
                 <span asp-validation-for="User.CreatedAt" class="text-danger"></span>
             </div>
@@ -49,37 +49,37 @@
         <!-- Cột phải: Thông tin profile -->
         <div class="col-md-6">
             <div class="mb-3">
-                <label asp-for="User.Profile.FullName" class="form-label fw-semibold">Full Name <span class="text-danger">*</span></label>
+                <label asp-for="User.Profile.FullName" class="form-label fw-semibold">Họ và tên <span class="text-danger">*</span></label>
                 <input asp-for="User.Profile.FullName" class="form-control" />
                 <span asp-validation-for="User.Profile.FullName" class="text-danger"></span>
             </div>
 
             <div class="mb-3">
-                <label asp-for="User.Profile.Address" class="form-label fw-semibold">Address <span class="text-danger">*</span></label>
+                <label asp-for="User.Profile.Address" class="form-label fw-semibold">Địa chỉ <span class="text-danger">*</span></label>
                 <input asp-for="User.Profile.Address" class="form-control" />
                 <span asp-validation-for="User.Profile.Address" class="text-danger"></span>
             </div>
 
             <div class="mb-3">
-                <label asp-for="User.Profile.Phone" class="form-label fw-semibold">Phone <span class="text-danger">*</span></label>
+                <label asp-for="User.Profile.Phone" class="form-label fw-semibold">Số điện thoại <span class="text-danger">*</span></label>
                 <input asp-for="User.Profile.Phone" class="form-control" />
                 <span asp-validation-for="User.Profile.Phone" class="text-danger"></span>
             </div>
 
-            <div class="mb-3">
-                <label asp-for="User.Profile.AvatarUrl" class="form-label fw-semibold">Avatar URL <span class="text-danger">*</span></label>
-                <input asp-for="User.Profile.AvatarUrl" class="form-control" />
-                <span asp-validation-for="User.Profile.AvatarUrl" class="text-danger"></span>
-            </div>
+            @* <div class="mb-3"> *@
+            @*     <label asp-for="User.Profile.AvatarUrl" class="form-label fw-semibold">Avatar URL <span class="text-danger">*</span></label> *@
+            @*     <input asp-for="User.Profile.AvatarUrl" class="form-control" /> *@
+            @*     <span asp-validation-for="User.Profile.AvatarUrl" class="text-danger"></span> *@
+            @* </div> *@
         </div>
     </div>
 
     <div class="mt-4 d-flex align-items-center gap-2">
         <button type="submit" class="btn btn-primary">
-            <i class="bi bi-plus-circle-fill"></i> Create
+            <i class="bi bi-plus-circle-fill"></i> Tạo
         </button>
         <a asp-page="Index" class="btn btn-secondary">
-            <i class="bi bi-arrow-left-circle"></i> Back to List
+            <i class="bi bi-arrow-left-circle"></i> Quay lại danh sách
         </a>
     </div>
 </form>

@@ -3,4 +3,58 @@
 @{
     Layout = "~/Pages/Shared/_LayoutAdmin.cshtml";
 }
-<h1>Admin Dashboard</h1>
+<h1>Bảng thống kê</h1>
+<div class="dashboard-stats" style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;">
+    <div style="padding: 20px; background-color: #f1f1f1; border-radius: 10px;">
+        <h3>👤 Người dùng</h3>
+        <p>@Model.TotalUsers</p>
+    </div>
+    <div style="padding: 20px; background-color: #f1f1f1; border-radius: 10px;">
+        <h3>🛒 Đơn đặt hàng</h3>
+        <p>@Model.TotalOrders</p>
+    </div>
+    <div style="padding: 20px; background-color: #f1f1f1; border-radius: 10px;">
+        <h3>📦 Sản phẩm</h3>
+        <p>@Model.TotalProducts</p>
+    </div>
+    <div style="padding: 20px; background-color: #f1f1f1; border-radius: 10px;">
+        <h3>📁 Thể loại</h3>
+        <p>@Model.TotalCategories</p>
+    </div>
+</div>
+
+<hr />
+
+<h2>🕒 Recent Orders</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID đơn hàng</th>
+            <th>Người mua</th>
+            <th>Trạng thái</th>
+            <th>Tổng</th>
+            <th>Ngày</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in Model.RecentOrders)
+        {
+            <tr>
+                <td>@order.Id</td>
+                <td>@order.User.Username</td>
+                @* <td>@order.Status</td> *@
+                <td>
+                    <span class="badge badge-pill
+                        @(order.Status == "Pending" ? "badge-warning" :
+                        order.Status == "Shipped" ? "badge-info" :
+                        order.Status == "Completed" ? "badge-success" :
+                        "badge-danger")">
+                        @order.Status
+                    </span>
+                </td>
+                <td>@order.TotalAmount</td>
+                <td>@order.CreatedAt.ToString("g")</td>
+            </tr>
+        }
+    </tbody>
+</table>

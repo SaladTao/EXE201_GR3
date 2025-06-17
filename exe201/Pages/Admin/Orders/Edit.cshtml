@@ -9,7 +9,7 @@
 <div class="container mt-4">
     <div class="card shadow-sm">
         <div class="card-header bg-primary text-white">
-            <h2 class="mb-0">Edit Order</h2>
+            <h2 class="mb-0">Chỉnh sửa</h2>
         </div>
         <div class="card-body">
             <form method="post">
@@ -17,22 +17,22 @@
                 <input type="hidden" asp-for="Order.Id" />
 
                 <div class="form-group">
-                    <label asp-for="Order.User.Username" class="control-label font-weight-bold"></label>
+                    <label asp-for="Order.User.Username" class="control-label font-weight-bold">Tên người mua</label>
                     <input asp-for="Order.User.Username" class="form-control form-control-lg" readonly />
                 </div>
 
                 <div class="form-group">
-                    <label asp-for="Order.TotalAmount" class="control-label font-weight-bold"></label>
+                    <label asp-for="Order.TotalAmount" class="control-label font-weight-bold">Tổng giá</label>
                     <input asp-for="Order.TotalAmount" class="form-control form-control-lg" readonly />
                 </div>
 
                 <div class="form-group">
-                    <label asp-for="Order.CreatedAt" class="control-label font-weight-bold"></label>
+                    <label asp-for="Order.CreatedAt" class="control-label font-weight-bold">Ngày tạo</label>
                     <input asp-for="Order.CreatedAt" class="form-control form-control-lg"  />
                 </div>
 
                 <div class="form-group">
-                    <label asp-for="Order.Status" class="control-label font-weight-bold"></label>
+                    <label asp-for="Order.Status" class="control-label font-weight-bold">Trạng thái</label>
                     <select asp-for="Order.Status" class="form-control form-control-lg">
                         <option value="Pending">Pending</option>
                         <option value="Shipped">Shipped</option>
@@ -43,14 +43,14 @@
                 </div>
 
                 <div class="text-center mt-3">
-                    <button type="submit" class="btn btn-success btn-lg">Save</button>
+                    <button type="submit" class="btn btn-success btn-lg">Lưu</button>
                 </div>
             </form>
         </div>
     </div>
 
     <div class="text-center mt-4">
-        <a asp-page="./Index" class="btn btn-secondary btn-lg">Back to List</a>
+        <a asp-page="./Index" class="btn btn-secondary btn-lg">Quay lại danh sách</a>
     </div>
 </div>
 

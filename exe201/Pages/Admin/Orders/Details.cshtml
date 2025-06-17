@@ -9,35 +9,35 @@
 <div class="container mt-4">
     <div class="card shadow-sm">
         <div class="card-header bg-primary text-white">
-            <h2 class="mb-0">Order Details</h2>
+            <h2 class="mb-0">Chi tiết đơn hàng</h2>
         </div>
         <div class="card-body">
-            <h4 class="mb-3">General Information</h4>
+            <h4 class="mb-3">Thông tin chung</h4>
             <hr />
             <dl class="row">
                 <dt class="col-sm-3 font-weight-bold">
-                    @Html.DisplayNameFor(model => model.Order.User.Username)
+                    Tên người mua
                 </dt>
                 <dd class="col-sm-9">
                     @Html.DisplayFor(model => model.Order.User.Username)
                 </dd>
 
                 <dt class="col-sm-3 font-weight-bold">
-                    @Html.DisplayNameFor(model => model.Order.TotalAmount)
+                    Tổng đơn hàng
                 </dt>
                 <dd class="col-sm-9">
                     @Html.DisplayFor(model => model.Order.TotalAmount)
                 </dd>
 
                 <dt class="col-sm-3 font-weight-bold">
-                    @Html.DisplayNameFor(model => model.Order.CreatedAt)
+                    Ngày tạo
                 </dt>
                 <dd class="col-sm-9">
                     @Html.DisplayFor(model => model.Order.CreatedAt)
                 </dd>
 
                 <dt class="col-sm-3 font-weight-bold">
-                    @Html.DisplayNameFor(model => model.Order.Status)
+                    Trang thái
                 </dt>
                 <dd class="col-sm-9">
                     <span class="badge badge-pill
@@ -54,16 +54,16 @@
 
     <div class="card mt-4 shadow-sm">
         <div class="card-header bg-secondary text-white">
-            <h4 class="mb-0">Order Items</h4>
+            <h4 class="mb-0">Sản phẩm</h4>
         </div>
         <div class="card-body">
             <table class="table table-bordered table-hover">
                 <thead class="thead-dark">
                     <tr>
-                        <th>Product</th>
-                        <th>Quantity</th>
-                        <th>Price</th>
-                        <th>Subtotal</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Số lượng</th>
+                        <th>Giá</th>
+                        <th>Thành giá</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -72,8 +72,8 @@
                         <tr>
                             <td>@detail.Product.Name</td>
                             <td>@detail.Quantity</td>
-                            <td>@detail.Price.ToString("C")</td>
-                            <td>@((detail.Quantity * detail.Price).ToString("C"))</td>
+                            <td>@detail.Price</td>
+                            <td>@((detail.Quantity * detail.Price))</td>
                         </tr>
                     }
                 </tbody>
@@ -82,7 +82,7 @@
     </div>
 
     <div class="text-center mt-4">
-        <a asp-page="./Edit" asp-route-id="@Model.Order.Id" class="btn btn-warning btn-lg">Edit Order</a>
-        <a asp-page="./Index" class="btn btn-secondary btn-lg">Back to List</a>
+        <a asp-page="./Edit" asp-route-id="@Model.Order.Id" class="btn btn-warning btn-lg">Chỉnh sửa</a>
+        <a asp-page="./Index" class="btn btn-secondary btn-lg">Quay lại danh sách</a>
     </div>
 </div>

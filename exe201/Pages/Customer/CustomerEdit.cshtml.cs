@@ -21,6 +21,8 @@ namespace exe201.Pages.Customer
 
         [BindProperty]
         public UserProfile UserProfile { get; set; } = default!;
+        [BindProperty]
+        public User User { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -29,6 +31,8 @@ namespace exe201.Pages.Customer
             {
                 return RedirectToPage("/Login/Index");
             }
+
+            User = await _context.Users.Include(u => u.Profile).FirstOrDefaultAsync(u=>u.Id==userId);
 
             var userProfile = await _context.UserProfiles.FirstOrDefaultAsync(m => m.UserId == userId);
             if (userProfile == null)
@@ -51,6 +55,12 @@ namespace exe201.Pages.Customer
             {
                 return RedirectToPage("/Login/Index");
             }
+
+            var userUpdate = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+            userUpdate.Username = User.Username;
+            userUpdate.Email = User.Email;
+            _context.Users.Update(userUpdate);
+            HttpContext.Session.SetString("Username", userUpdate.Username ?? "");
 
             UserProfile.UserId = userId.Value;
              

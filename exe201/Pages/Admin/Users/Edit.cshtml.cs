@@ -80,7 +80,7 @@ namespace exe201.Pages.Admin.Users
             userToUpdate.Profile.FullName = User.Profile?.FullName;
             userToUpdate.Profile.Address = User.Profile?.Address;
             userToUpdate.Profile.Phone = User.Profile?.Phone;
-            userToUpdate.Profile.AvatarUrl = User.Profile?.AvatarUrl;
+            //userToUpdate.Profile.AvatarUrl = User.Profile?.AvatarUrl;
 
             try
             {

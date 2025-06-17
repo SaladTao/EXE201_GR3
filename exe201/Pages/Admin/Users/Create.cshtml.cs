@@ -44,6 +44,7 @@ namespace exe201.Pages.Admin.Users
             {
                 return RedirectToPage("/Login/Index");
             }
+            User.Profile.AvatarUrl = "";
             _context.Users.Add(User);
             await _context.SaveChangesAsync();
             
