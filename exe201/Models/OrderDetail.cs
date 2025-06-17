@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace exe201.Models
 {
@@ -18,6 +19,9 @@ namespace exe201.Models
         public Order Order { get; set; }
 
         public Product Product { get; set; }
+        [MaxLength(50)]
+        public string Size { get; set; }
+
     }
 
 }

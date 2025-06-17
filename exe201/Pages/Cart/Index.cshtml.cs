@@ -43,10 +43,28 @@ namespace exe201.Pages.Cart
             if (CartItems == null)
                 CartItems = new List<CartItem>();
 
-            TotalAmount = CartItems.Sum(ci => ci.Product.Price * ci.Quantity);
+            TotalAmount = CartItems.Sum(ci =>
+            {
+                decimal price = ci.Product.Price;
+                switch (ci.Size?.ToLower())
+                {
+                    case "trung bình":
+                        price *= 1.2m;
+                        break;
+                    case "lớn":
+                        price *= 1.5m;
+                        break;
+                    case "nhỏ":
+                    default:
+                        price *= 1.0m;
+                        break;
+                }
+                return price * ci.Quantity;
+            });
 
             return Page();
         }
+
 
         public async Task<IActionResult> OnPostDeleteAsync(int cartItemId)
         {

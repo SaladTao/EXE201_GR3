@@ -170,43 +170,38 @@
         <!-- Thông tin sản phẩm -->
         <div class="col-md-6 mt-4 mt-md-0">
             <h1 class="product-title vietnamese-font">@Model.Product.Name</h1>
-            <p class="price">Giá: @Model.Product.Price.ToString("N0") VNĐ</p>
+            <p class="price" id="dynamicPrice">Giá: @Model.Product.Price.ToString("N0") VNĐ</p>
+
             <p class="category">Thể loại: <span class="fw-normal">@Model.Product.Category?.Name</span></p>
 
-            <!-- Chọn kích thước -->
-            <label for="sizeSelect">Chọn kích thước:</label>
-            <select id="sizeSelect" class="form-select w-50 mb-3">
-                <option value="">-- Chọn kích thước --</option>
-                <option value="Nhỏ">Nhỏ</option>
-                <option value="Trung bình">Trung bình</option>
-                <option value="Lớn">Lớn</option>
-            </select>
-            <div id="errorSize" class="error-message" style="display:none;">Vui lòng chọn kích thước trước khi thêm vào giỏ.</div>
 
-            <div class="mb-3">
-                <label for="quantityInput" class="form-label fw-semibold">Số lượng:</label>
-                <input type="number" id="quantityInput" name="Quantity" class="form-control w-50" min="1" max="100" value="@Model.Quantity" required />
-
-            </div>
+        
 
             <!-- Nút mua hàng -->
             @if (userId != null)
             {
                 <form method="post" asp-page-handler="AddToCart" id="addToCartForm">
                     <input type="hidden" name="productId" value="@Model.Product.Id" />
-                    <input type="hidden" id="selectedSize" name="selectedSize" />
+
+                    <label for="sizeSelect">Chọn kích thước:</label>
+                    <select id="sizeSelect" name="size" class="form-select w-50 mb-3" required>
+                        <option value="">-- Chọn kích thước --</option>
+                        <option value="Nhỏ">Nhỏ</option>
+                        <option value="Trung bình">Trung bình</option>
+                        <option value="Lớn">Lớn</option>
+                    </select>
+
+                    <div id="errorSize" class="error-message" style="display:none;">Vui lòng chọn kích thước trước khi thêm vào giỏ.</div>
+
+                 
 
                     <button type="submit" class="btn-add-cart">
                         THÊM VÀO GIỎ HÀNG <i class="bi bi-cart-plus ms-2"></i>
                     </button>
                 </form>
             }
-            else
-            {
-                <a href="/Login" class="btn btn-success btn-login mt-3">
-                    ĐĂNG NHẬP ĐỂ MUA HÀNG <i class="bi bi-box-arrow-in-right ms-2"></i>
-                </a>
-            }
+            <div id="errorSize" class="error-message" style="display:none;">Vui lòng chọn kích thước trước khi thêm vào giỏ.</div>
+
         </div>
     </div>
 
@@ -246,6 +241,30 @@
             document.getElementById('errorSize').style.display = 'none';
             document.getElementById('selectedSize').value = size;
         }
+    });
+
+     const basePrice = @Model.Product.Price;
+
+    // Xử lý thay đổi giá khi chọn kích thước
+    document.getElementById("sizeSelect").addEventListener("change", function () {
+        const size = this.value;
+        let finalPrice = basePrice;
+
+        switch (size) {
+            case "Trung bình":
+                finalPrice = basePrice * 1.2;
+                break;
+            case "Lớn":
+                finalPrice = basePrice * 1.5;
+                break;
+            case "Nhỏ":
+            default:
+                finalPrice = basePrice;
+                break;
+        }
+
+        // Hiển thị lại giá theo định dạng VNĐ
+        document.getElementById("dynamicPrice").innerText = "Giá: " + finalPrice.toLocaleString("vi-VN") + " VNĐ";
     });
 </script>
 

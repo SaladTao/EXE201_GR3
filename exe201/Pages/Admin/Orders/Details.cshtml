@@ -48,7 +48,9 @@
                         @Html.DisplayFor(model => model.Order.Status)
                     </span>
                 </dd>
+              
             </dl>
+
         </div>
     </div>
 
@@ -64,6 +66,7 @@
                         <th>Quantity</th>
                         <th>Price</th>
                         <th>Subtotal</th>
+                        <th>Size</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -74,6 +77,7 @@
                             <td>@detail.Quantity</td>
                             <td>@detail.Price.ToString("C")</td>
                             <td>@((detail.Quantity * detail.Price).ToString("C"))</td>
+                            <td>@detail.Size</td>
                         </tr>
                     }
                 </tbody>
