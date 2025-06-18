@@ -60,12 +60,32 @@ namespace exe201.Pages.Cart
             // Get selected cart items
             CartItems = await _context.CartItems
                 .Include(ci => ci.Product)
+                .Include(ci => ci.Size)
                 .Where(ci => selectedItemIds.Contains(ci.Id))
                 .ToListAsync();
 
             if (CartItems != null)
             {
-                Total = CartItems.Sum(item => item.Product.Price * item.Quantity);
+                Total = CartItems.Sum(item => {
+                    decimal price = item.Product.Price;
+                    if (item.Size != null)
+                    {
+                        switch (item.Size.Name)
+                        {
+                            case "Trung Bình":
+                                price *= 1.2m;
+                                break;
+                            case "Lớn":
+                                price *= 1.5m;
+                                break;
+                            case "Nhỏ":
+                            default:
+                                price *= 1.0m;
+                                break;
+                        }
+                    }
+                    return price * item.Quantity;
+                });
             }
 
             return Page();
@@ -98,6 +118,7 @@ namespace exe201.Pages.Cart
             // Get selected cart items
             var cartItems = await _context.CartItems
                 .Include(ci => ci.Product)
+                .Include(ci => ci.Size)
                 .Where(ci => selectedItemIds.Contains(ci.Id))
                 .ToListAsync();
 
@@ -106,11 +127,33 @@ namespace exe201.Pages.Cart
                 return RedirectToPage("/Cart/Index");
             }
 
+            // Calculate total with size pricing
+            decimal totalAmount = cartItems.Sum(item => {
+                decimal price = item.Product.Price;
+                if (item.Size != null)
+                {
+                    switch (item.Size.Name)
+                    {
+                        case "Trung Bình":
+                            price *= 1.2m;
+                            break;
+                        case "Lớn":
+                            price *= 1.5m;
+                            break;
+                        case "Nhỏ":
+                        default:
+                            price *= 1.0m;
+                            break;
+                    }
+                }
+                return price * item.Quantity;
+            });
+
             // Chỉ tạo Order với các trường cần thiết
             var order = new Order
             {
                 UserId = userId,
-                TotalAmount = cartItems.Sum(item => item.Product.Price * item.Quantity),
+                TotalAmount = totalAmount,
                 Status = OrderStatus.Pending.ToString(),
                 CreatedAt = DateTime.Now
             };
@@ -118,17 +161,18 @@ namespace exe201.Pages.Cart
             _context.Orders.Add(order);
             await _context.SaveChangesAsync();
 
-            // Chỉ tạo OrderDetail với các trường cần thiết
+            // Chỉ tạo OrderItem với các trường cần thiết
             foreach (var item in cartItems)
             {
-                var orderDetail = new OrderDetail
+                var orderItem = new OrderItem
                 {
                     OrderId = order.Id,
                     ProductId = item.ProductId,
+                    SizeId = item.SizeId,
                     Quantity = item.Quantity,
                     Price = item.Product.Price
                 };
-                _context.OrderDetails.Add(orderDetail);
+                _context.OrderItems.Add(orderItem);
             }
 
             // Remove selected items from cart

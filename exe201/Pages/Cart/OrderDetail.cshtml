@@ -121,6 +121,15 @@
             margin-bottom: 1em;
         }
 
+    .size-badge {
+        display: inline-block;
+        background-color: #f0f0f0;
+        color: #333;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        margin-top: 5px;
+    }
 </style>
 
 <div class="container order-detail-container">
@@ -161,20 +170,16 @@
                     <h4 class="mb-0 vietnamese-font">Chi tiết sản phẩm</h4>
                 </div>
                 <div class="order-body">
-                    @foreach (var item in Model.OrderDetails)
+                    @foreach (var item in Model.OrderItems)
                     {
                         <div class="product-item">
                             <div class="row align-items-center">
                                 <div class="col-auto">
-                                    <img src="@Url.Content(item.Product.ImageUrl)" alt="@item..Name" class="product-image">
+                                    <img src="@Url.Content(item.Product.ImageUrl)" alt="@item.Product.Name" class="product-image">
                                 </div>
                                 <div class="col">
                                     <h5 class="mb-1 vietnamese-font">@item.Product.Name</h5>
-                                    
-                                </div>
-                                <div class="col-auto text-end">
-                                    <p class="mb-0">@item.Quantity x @item.Price.ToString("N0") VNĐ</p>
-                                    <p class="mb-0 fw-bold">@((item.Quantity * item.Price).ToString("N0")) VNĐ</p>
+                                    <div><span class="size-badge">Kích thước: @item.Size.Name</span></div>
                                 </div>
                             </div>
                         </div>
