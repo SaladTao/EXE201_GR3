@@ -228,7 +228,20 @@
                                         <small class="text-muted">Số lượng: @item.Quantity</small>
                                         <div><span class="size-badge">Kích thước: @item.Size.Name</span></div>
                                     </div>
-                                    <span>@((item.Product.Price * item.Quantity).ToString("N0")) VNĐ</span>
+                                    <span>
+    @(
+        (
+            item.Product.Price
+            * (item.Size?.Name switch {
+                "Trung Bình" => 1.2m,
+                "Lớn"       => 1.5m,
+                _           => 1.0m
+            })
+            * item.Quantity
+        ).ToString("N0")
+    )
+    VNĐ
+</span>
                                 </div>
                             </div>
                         }
