@@ -37,16 +37,38 @@ namespace exe201.Pages.Cart
 
             CartItems = await _context.CartItems
                 .Include(ci => ci.Product)
+                .Include(ci => ci.Size)
                 .Where(ci => ci.CartId == cart.Id)
                 .ToListAsync();
 
             if (CartItems == null)
                 CartItems = new List<CartItem>();
 
-            TotalAmount = CartItems.Sum(ci => ci.Product.Price * ci.Quantity);
+            TotalAmount = CartItems.Sum(ci =>
+            {
+                decimal price = ci.Product.Price;
+                if (ci.Size != null)
+                {
+                    switch (ci.Size.Name)
+                    {
+                        case "Trung Bình":
+                            price *= 1.2m;
+                            break;
+                        case "Lớn":
+                            price *= 1.5m;
+                            break;
+                        case "Nhỏ":
+                        default:
+                            price *= 1.0m;
+                            break;
+                    }
+                }
+                return price * ci.Quantity;
+            });
 
             return Page();
         }
+
 
         public async Task<IActionResult> OnPostDeleteAsync(int cartItemId)
         {

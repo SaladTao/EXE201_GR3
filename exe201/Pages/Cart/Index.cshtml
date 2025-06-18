@@ -128,7 +128,16 @@
         .vietnamese-font p {
             margin-bottom: 1em;
         }
-
+        
+    .size-badge {
+        display: inline-block;
+        background-color: #f0f0f0;
+        color: #333;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        margin-top: 5px;
+    }
 </style>
 
 <div class="container cart-container">
@@ -168,7 +177,7 @@
                         </div>
                         <div class="col">
                             <h5 class="vietnamese-font">@item.Product.Name</h5>
-                          
+                            <span class="size-badge">Kích thước: @item.Size.Name</span>
                         </div>
                         <div class="col-auto action-group">
                             <button type="button" class="quantity-btn" onclick="updateQuantity(@item.Id, @item.Quantity - 1)">-</button>
@@ -176,8 +185,27 @@
                             <button type="button" class="quantity-btn" onclick="updateQuantity(@item.Id, @item.Quantity + 1)">+</button>
                         </div>
                         <div class="col-auto">
-                            <span class="price">@((item.Product.Price * item.Quantity).ToString("N0")) VNĐ</span>
+                            @{
+                                // Lấy giá gốc
+                                decimal price = item.Product.Price;
+                                // Tính hệ số theo Size (null-safe)
+                                var multiplier = item.Size?.Name switch
+                                {
+                                    "Trung Bình" => 1.2m,
+                                    "Lớn" => 1.5m,
+                                    _ => 1.0m
+                                };
+                                // Giá sau khi áp hệ số
+                                decimal adjustedPrice = price * multiplier;
+                                // Tổng cho dòng này
+                                decimal lineTotal = adjustedPrice * item.Quantity;
+                            }
+                            <span class="price">@lineTotal.ToString("N0") VNĐ</span>
+                            @* Nếu bạn muốn hiển thị breakdown:
+    <small>(@price.ToString("N0") × @multiplier = @adjustedPrice.ToString("N0")) × @item.Quantity</small>
+    *@
                         </div>
+
                     </div>
                 </div>
             }

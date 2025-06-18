@@ -26,6 +26,19 @@ namespace exe201.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Sizes",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Sizes", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
@@ -190,7 +203,8 @@ namespace exe201.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     CartId = table.Column<int>(type: "int", nullable: false),
                     ProductId = table.Column<int>(type: "int", nullable: false),
-                    Quantity = table.Column<int>(type: "int", nullable: false)
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    SizeId = table.Column<int>(type: "int", nullable: false, defaultValue: 1)
                 },
                 constraints: table =>
                 {
@@ -205,6 +219,12 @@ namespace exe201.Migrations
                         name: "FK_CartItems_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_CartItems_Sizes_SizeId",
+                        column: x => x.SizeId,
+                        principalTable: "Sizes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -237,6 +257,41 @@ namespace exe201.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "OrderItems",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    OrderId = table.Column<int>(type: "int", nullable: false),
+                    ProductId = table.Column<int>(type: "int", nullable: false),
+                    SizeId = table.Column<int>(type: "int", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrderItems", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_OrderItems_Orders_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Orders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_OrderItems_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_OrderItems_Sizes_SizeId",
+                        column: x => x.SizeId,
+                        principalTable: "Sizes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_CartItems_CartId",
                 table: "CartItems",
@@ -246,6 +301,11 @@ namespace exe201.Migrations
                 name: "IX_CartItems_ProductId",
                 table: "CartItems",
                 column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_CartItems_SizeId",
+                table: "CartItems",
+                column: "SizeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Carts_UserId",
@@ -266,6 +326,21 @@ namespace exe201.Migrations
                 name: "IX_OrderDetails_ProductId",
                 table: "OrderDetails",
                 column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrderItems_OrderId",
+                table: "OrderItems",
+                column: "OrderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrderItems_ProductId",
+                table: "OrderItems",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrderItems_SizeId",
+                table: "OrderItems",
+                column: "SizeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_UserId",
@@ -298,6 +373,22 @@ namespace exe201.Migrations
                 table: "Users",
                 column: "Username",
                 unique: true);
+            
+            // Insert default sizes
+            migrationBuilder.InsertData(
+                table: "Sizes",
+                columns: new[] { "Id", "Name" },
+                values: new object[] { 1, "Nhỏ" });
+                
+            migrationBuilder.InsertData(
+                table: "Sizes",
+                columns: new[] { "Id", "Name" },
+                values: new object[] { 2, "Trung Bình" });
+                
+            migrationBuilder.InsertData(
+                table: "Sizes",
+                columns: new[] { "Id", "Name" },
+                values: new object[] { 3, "Lớn" });
         }
 
         /// <inheritdoc />
@@ -307,10 +398,10 @@ namespace exe201.Migrations
                 name: "CartItems");
 
             migrationBuilder.DropTable(
-                name: "ChatMessages");
-
-            migrationBuilder.DropTable(
                 name: "OrderDetails");
+                
+            migrationBuilder.DropTable(
+                name: "OrderItems");
 
             migrationBuilder.DropTable(
                 name: "ProductComments");
@@ -320,6 +411,9 @@ namespace exe201.Migrations
 
             migrationBuilder.DropTable(
                 name: "Carts");
+                
+            migrationBuilder.DropTable(
+                name: "Sizes");
 
             migrationBuilder.DropTable(
                 name: "Orders");

@@ -132,6 +132,27 @@
         font-size: 1rem;
     }
 
+    .qr-code-container {
+        text-align: center;
+        margin-top: 1.5rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid #eee;
+    }
+
+    .qr-code-container img {
+        max-width: 200px;
+        margin: 0 auto;
+    }
+
+    .size-badge {
+        display: inline-block;
+        background-color: #f0f0f0;
+        color: #333;
+        padding: 4px 8px;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        margin-top: 5px;
+    }
 </style>
 
 <div class="container checkout-container">
@@ -182,13 +203,11 @@
                             <div class="col-6 ps-2">
                                 <div class="d-grid h-100">
                                     <button type="submit" class="btn btn-checkout w-100 h-100 d-flex align-items-center justify-content-center">
-                                        <i class="bi bi-check2-circle me-2"></i> Đặt hàng
+                                        <i class="bi bi-check2-circle me-2"></i> Xác nhận thanh toán và đặt hàng
                                     </button>
                                 </div>
                             </div>
                         </div>
-
-
                     </form>
                 </div>
             </div>
@@ -207,8 +226,22 @@
                                     <div>
                                         <h6 class="mb-1 vietnamese-font">@item.Product.Name</h6>
                                         <small class="text-muted">Số lượng: @item.Quantity</small>
+                                        <div><span class="size-badge">Kích thước: @item.Size.Name</span></div>
                                     </div>
-                                    <span>@((item.Product.Price * item.Quantity).ToString("N0")) VNĐ</span>
+                                    <span>
+    @(
+        (
+            item.Product.Price
+            * (item.Size?.Name switch {
+                "Trung Bình" => 1.2m,
+                "Lớn"       => 1.5m,
+                _           => 1.0m
+            })
+            * item.Quantity
+        ).ToString("N0")
+    )
+    VNĐ
+</span>
                                 </div>
                             </div>
                         }
@@ -218,6 +251,12 @@
                             <span>Tổng tiền:</span>
                             <span>@Model.Total.ToString("N0") VNĐ</span>
                         </div>
+                    </div>
+                    
+                    <!-- QR Code Payment -->
+                    <div class="qr-code-container">
+                        <h5>Quét mã QR để thanh toán</h5>
+                        <img src="~/images/Code.jpg" alt="QR Code Payment" class="img-fluid" />
                     </div>
                 }
                 else

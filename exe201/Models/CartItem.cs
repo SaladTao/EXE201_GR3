@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace exe201.Models
 {
@@ -13,5 +14,7 @@ namespace exe201.Models
         public virtual Product Product { get; set; }
 
         public int Quantity { get; set; }
+        public int SizeId { get; set; }
+        public virtual Size Size { get; set; }
     }
 }

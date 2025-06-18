@@ -21,7 +21,7 @@ namespace exe201.Pages.Cart
         public int OrderId { get; set; }
 
         public Order Order { get; set; }
-        public List<OrderDetail> OrderDetails { get; set; }
+        public List<OrderItem> OrderItems { get; set; }
         public User User { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
@@ -42,8 +42,9 @@ namespace exe201.Pages.Cart
             }
 
             // Lấy chi tiết đơn hàng
-            OrderDetails = await _context.OrderDetails
+            OrderItems = await _context.OrderItems
                 .Include(od => od.Product)
+                .Include(od => od.Size)
                 .Where(od => od.OrderId == OrderId)
                 .ToListAsync();
 
