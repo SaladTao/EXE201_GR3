@@ -177,11 +177,12 @@
 
         <form method="post" asp-page-handler="AddToCart" id="addToCartForm">
                 <label for="sizeSelect">Chọn kích thước:</label>
-                <select id="sizeSelect" name="size" class="form-select w-50 mb-3" required>
+                <select id="sizeSelect" name="sizeId" class="form-select w-50 mb-3" required>
                     <option value="">-- Chọn kích thước --</option>
-                    <option value="Nhỏ">Nhỏ</option>
-                    <option value="Trung bình">Trung bình</option>
-                    <option value="Lớn">Lớn</option>
+                    @foreach (var size in Model.Sizes)
+                    {
+                        <option value="@size.Id">@size.Name</option>
+                    }
                 </select>
             <!-- Nút mua hàng -->
             @if (userId != null)
@@ -244,7 +245,6 @@
             document.getElementById('errorSize').style.display = 'block';
         } else {
             document.getElementById('errorSize').style.display = 'none';
-            document.getElementById('selectedSize').value = size;
         }
     });
 
@@ -252,11 +252,15 @@
 
     // Xử lý thay đổi giá khi chọn kích thước
     document.getElementById("sizeSelect").addEventListener("change", function () {
-        const size = this.value;
+        const sizeId = this.value;
         let finalPrice = basePrice;
 
-        switch (size) {
-            case "Trung bình":
+        // Lấy text của option được chọn
+        const selectedOption = this.options[this.selectedIndex];
+        const sizeName = selectedOption.text;
+
+        switch (sizeName) {
+            case "Trung Bình":
                 finalPrice = basePrice * 1.2;
                 break;
             case "Lớn":

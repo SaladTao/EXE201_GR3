@@ -1,5 +1,4 @@
-﻿
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using exe201.Models;
@@ -22,6 +21,7 @@ namespace exe201.Pages.Home
         public int productId { get; set; }
 
         public Product Product { get; set; }
+        public List<Size> Sizes { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
         {
@@ -39,9 +39,12 @@ namespace exe201.Pages.Home
                 return NotFound(); // <- xử lý khi không tìm thấy sản phẩm
             }
 
+            // Get all sizes
+            Sizes = await _context.Sizes.ToListAsync();
+
             return Page();
         }
-        public async Task<IActionResult> OnPostAddToCartAsync(int productId, string size)
+        public async Task<IActionResult> OnPostAddToCartAsync(int productId, int sizeId)
         {
             var userId = HttpContext.Session.GetInt32("UserId");
             if (userId == null)
@@ -58,9 +61,9 @@ namespace exe201.Pages.Home
                 await _context.SaveChangesAsync();
             }
 
-            // Tìm sản phẩm có cùng productId + size
+            // Tìm sản phẩm có cùng productId + sizeId
             var existingItem = await _context.CartItems.FirstOrDefaultAsync(ci =>
-                ci.CartId == cart.Id && ci.ProductId == productId && ci.Size == size);
+                ci.CartId == cart.Id && ci.ProductId == productId && ci.SizeId == sizeId);
 
             if (existingItem == null)
             {
@@ -68,7 +71,7 @@ namespace exe201.Pages.Home
                 {
                     CartId = cart.Id,
                     ProductId = productId,
-                    Size = size,
+                    SizeId = sizeId,
                     Quantity = Quantity > 0 ? Quantity : 1
                 };
                 _context.CartItems.Add(cartItem);
@@ -83,7 +86,5 @@ namespace exe201.Pages.Home
             TempData["SuccessMessage"] = "Đã thêm sản phẩm vào giỏ hàng!";
             return RedirectToPage(new { productId });
         }
-
-
     }
 }

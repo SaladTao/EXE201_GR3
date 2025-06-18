@@ -14,8 +14,7 @@ namespace exe201.Models
         public virtual Product Product { get; set; }
 
         public int Quantity { get; set; }
-        [MaxLength(50)]
-        public string Size { get; set; }
-
+        public int SizeId { get; set; }
+        public virtual Size Size { get; set; }
     }
 }

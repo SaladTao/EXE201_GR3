@@ -15,6 +15,8 @@ namespace exe201.Models
         public DbSet<CartItem> CartItems { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<Size> Sizes { get; set; }
         public DbSet<ProductComment> ProductComments { get; set; }
         public DbSet<ChatMessage> ChatMessages { get; set; }
 
@@ -24,6 +26,13 @@ namespace exe201.Models
                 .HasIndex(u => u.Username).IsUnique();
             modelBuilder.Entity<User>()
                 .HasIndex(u => u.Email).IsUnique();
+            
+            // Add default sizes
+            modelBuilder.Entity<Size>().HasData(
+                new Size { Id = 1, Name = "Nhỏ" },
+                new Size { Id = 2, Name = "Trung Bình" },
+                new Size { Id = 3, Name = "Lớn" }
+            );
              
             base.OnModelCreating(modelBuilder);
         }

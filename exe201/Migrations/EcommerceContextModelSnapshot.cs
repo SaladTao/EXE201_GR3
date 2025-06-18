@@ -30,6 +30,9 @@ namespace exe201.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("UserId")
                         .HasColumnType("int");
 
@@ -57,11 +60,17 @@ namespace exe201.Migrations
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
+                    b.Property<int>("SizeId")
+                        .HasColumnType("int")
+                        .HasDefaultValue(1);
+
                     b.HasKey("Id");
 
                     b.HasIndex("CartId");
 
                     b.HasIndex("ProductId");
+
+                    b.HasIndex("SizeId");
 
                     b.ToTable("CartItems");
                 });
@@ -176,6 +185,40 @@ namespace exe201.Migrations
                     b.ToTable("OrderDetails");
                 });
 
+            modelBuilder.Entity("exe201.Models.OrderItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SizeId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("SizeId");
+
+                    b.ToTable("OrderItems");
+                });
+
             modelBuilder.Entity("exe201.Models.Product", b =>
                 {
                     b.Property<int>("Id")
@@ -255,6 +298,40 @@ namespace exe201.Migrations
                     b.ToTable("ProductComments");
                 });
 
+            modelBuilder.Entity("exe201.Models.Size", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Sizes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Nhỏ"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Trung Bình"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Lớn"
+                        });
+                });
+
             modelBuilder.Entity("exe201.Models.User", b =>
                 {
                     b.Property<int>("Id")
@@ -329,7 +406,7 @@ namespace exe201.Migrations
             modelBuilder.Entity("exe201.Models.Cart", b =>
                 {
                     b.HasOne("exe201.Models.User", null)
-                        .WithMany("Carts")
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -344,61 +421,90 @@ namespace exe201.Migrations
                         .IsRequired();
 
                     b.HasOne("exe201.Models.Product", "Product")
-                        .WithMany("CartItems")
+                        .WithMany()
                         .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("exe201.Models.Size", "Size")
+                        .WithMany()
+                        .HasForeignKey("SizeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Cart");
 
                     b.Navigation("Product");
+
+                    b.Navigation("Size");
                 });
 
             modelBuilder.Entity("exe201.Models.ChatMessage", b =>
                 {
-                    b.HasOne("exe201.Models.User", "User")
-                        .WithMany("ChatMessages")
+                    b.HasOne("exe201.Models.User", null)
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("exe201.Models.Order", b =>
                 {
-                    b.HasOne("exe201.Models.User", "User")
-                        .WithMany("Orders")
+                    b.HasOne("exe201.Models.User", null)
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("exe201.Models.OrderDetail", b =>
                 {
-                    b.HasOne("exe201.Models.Order", "Order")
-                        .WithMany("OrderDetails")
+                    b.HasOne("exe201.Models.Order", null)
+                        .WithMany()
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("exe201.Models.Product", "Product")
-                        .WithMany("OrderDetails")
+                        .WithMany()
                         .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+                });
+
+            modelBuilder.Entity("exe201.Models.OrderItem", b =>
+                {
+                    b.HasOne("exe201.Models.Order", "Order")
+                        .WithMany()
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("exe201.Models.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("exe201.Models.Size", "Size")
+                        .WithMany()
+                        .HasForeignKey("SizeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Order");
 
                     b.Navigation("Product");
+
+                    b.Navigation("Size");
                 });
 
             modelBuilder.Entity("exe201.Models.Product", b =>
                 {
                     b.HasOne("exe201.Models.Category", "Category")
-                        .WithMany("Products")
+                        .WithMany()
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -408,32 +514,26 @@ namespace exe201.Migrations
 
             modelBuilder.Entity("exe201.Models.ProductComment", b =>
                 {
-                    b.HasOne("exe201.Models.Product", "Product")
-                        .WithMany("Comments")
+                    b.HasOne("exe201.Models.Product", null)
+                        .WithMany()
                         .HasForeignKey("ProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("exe201.Models.User", "User")
-                        .WithMany("Comments")
+                    b.HasOne("exe201.Models.User", null)
+                        .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Product");
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("exe201.Models.UserProfile", b =>
                 {
-                    b.HasOne("exe201.Models.User", "User")
+                    b.HasOne("exe201.Models.User", null)
                         .WithOne("Profile")
                         .HasForeignKey("exe201.Models.UserProfile", "UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("exe201.Models.Cart", b =>
@@ -441,37 +541,9 @@ namespace exe201.Migrations
                     b.Navigation("CartItems");
                 });
 
-            modelBuilder.Entity("exe201.Models.Category", b =>
-                {
-                    b.Navigation("Products");
-                });
-
-            modelBuilder.Entity("exe201.Models.Order", b =>
-                {
-                    b.Navigation("OrderDetails");
-                });
-
-            modelBuilder.Entity("exe201.Models.Product", b =>
-                {
-                    b.Navigation("CartItems");
-
-                    b.Navigation("Comments");
-
-                    b.Navigation("OrderDetails");
-                });
-
             modelBuilder.Entity("exe201.Models.User", b =>
                 {
-                    b.Navigation("Carts");
-
-                    b.Navigation("ChatMessages");
-
-                    b.Navigation("Comments");
-
-                    b.Navigation("Orders");
-
-                    b.Navigation("Profile")
-                        .IsRequired();
+                    b.Navigation("Profile");
                 });
 #pragma warning restore 612, 618
         }
