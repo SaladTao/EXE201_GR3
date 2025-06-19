@@ -19,7 +19,7 @@ namespace exe201.Pages.Admin.Orders
         }
 
         public Order Order { get; set; } = default!;
-
+        public List<OrderItem> OrderItems { get; set; }
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             var userIdStr = HttpContext.Session.GetString("UserId");
@@ -32,18 +32,20 @@ namespace exe201.Pages.Admin.Orders
                 return NotFound();
             }
 
-            var order = await _context.Orders
+            Order = await _context.Orders
                         .Include(o => o.User)
-                        .Include(o => o.OrderDetails)
-                        .ThenInclude(od => od.Product)
                         .FirstOrDefaultAsync(m => m.Id == id);
-            if (order == null)
+            if (Order == null)
             {
                 return NotFound();
             }
             else
             {
-                Order = order;
+                OrderItems = await _context.OrderItems
+                .Include(od => od.Product)
+                .Include(od => od.Size)
+                .Where(od => od.OrderId == Order.Id)
+                .ToListAsync();
             }
             return Page();
         }

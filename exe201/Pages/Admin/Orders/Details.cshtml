@@ -70,14 +70,14 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var detail in Model.Order.OrderDetails)
+                    @foreach (var detail in Model.OrderItems)
                     {
                         <tr>
                             <td>@detail.Product.Name</td>
                             <td>@detail.Quantity</td>
                             <td>@detail.Price.ToString("C")</td>
                             <td>@((detail.Quantity * detail.Price).ToString("C"))</td>
-                            <td>@detail.Size</td>
+                            <td>@detail.Size.Name</td>
                         </tr>
                     }
                 </tbody>
