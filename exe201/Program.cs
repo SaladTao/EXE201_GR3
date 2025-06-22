@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.DataProtection;
 using System.IO;
 using exe201.Service.AI;
+using exe201.Service.Admin;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -46,6 +47,7 @@ builder.Services.AddScoped<ICustomerService, CustomerService>();
 builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
 builder.Services.AddHttpClient<GeminiService>();
 builder.Services.AddScoped<CohereService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 // Cấu hình Data Protection với FileSystemXmlRepository và đảm bảo rằng thư mục keys có quyền truy cập đúng
 builder.Services.AddDataProtection()
@@ -89,7 +91,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseSession();  // Sử dụng session
+app.UseSession();  
 
 app.UseAuthorization();
 

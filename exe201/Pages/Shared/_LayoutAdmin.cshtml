@@ -3,15 +3,19 @@
 @inject IHttpContextAccessor HttpContextAccessor
 @inject IUserService UserService
 @{
-    var userId = HttpContextAccessor.HttpContext.Session.GetInt32("UserId");
-    User user = null;
-    UserProfile userprofile = null;
-    user = UserService.GetUserById(userId.Value);
-    userprofile = UserService.GetUserProfileById(userId.Value);
+    var session = HttpContextAccessor.HttpContext?.Session;
+    var userId = session?.GetInt32("UserId");
 
+    User user = null;
+    //UserProfile userprofile = null;
+
+    if (userId.HasValue)
+    {
+        user = UserService.GetUserById(userId.Value);
+    }
 }
+
 <!DOCTYPE html>
-Add commentMore actions
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -39,7 +43,7 @@ Add commentMore actions
                     <li class="nav-item nav-profile dropdown">
                         <a class="nav-link dropdown-toggle" id="profileDropdown" href="#" data-bs-toggle="dropdown" aria-expanded="false">
                             <div class="nav-profile-img">
-                                <img src="@userprofile.AvatarUrl" alt="image">
+                               
                                 <span class="availability-status online"></span>
                             </div>
                             <div class="nav-profile-text">
@@ -65,7 +69,7 @@ Add commentMore actions
                     <li class="nav-item nav-profile" style="cursor: pointer;" onclick="location.href='/admin'">
                         <div class="nav-link">
                             <div class="nav-profile-image">
-                                <img src="@userprofile.AvatarUrl" alt="profile" />
+                              
                                 <span class="login-status online"></span>
                             </div>
                             <div class="nav-profile-text d-flex flex-column">
